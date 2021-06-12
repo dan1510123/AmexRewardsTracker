@@ -18,13 +18,17 @@ struct FullTabView: View {
             
             Text("Under construction...")
                 .tabItem {
-                    Image("house.fill")
+                    Image("year")
+                        .resizable()
+                        .frame(width: 10, height: 10)
                     Text("Annual")
                 }
             
             MRListView()
                 .tabItem {
-                    Image("list.dash")
+                    Image("month")
+                        .resizable()
+                        .frame(width: 10, height: 10)
                     Text("Monthly")
                 }
         }
