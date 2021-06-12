@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddMRView: View {
+struct AddRewardView: View {
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
     
@@ -21,6 +21,8 @@ struct AddMRView: View {
             formatter.numberStyle = .decimal
             return formatter
         }()
+    
+    let annual: Bool
     
     var body: some View {
         ScrollView {
@@ -72,13 +74,25 @@ struct AddMRView: View {
     }
     
     private func onSavePressed() {
-        let newMonthlyReward = Reward(context: viewContext)
-        newMonthlyReward.title = titleFieldText
-        newMonthlyReward.details = detailsFieldText
-        newMonthlyReward.value = Float(valueFieldText) ?? 0
-        newMonthlyReward.redeemed = false
-        newMonthlyReward.annual = false
-        
+        if(annual) {
+            let newReward = Reward(context: viewContext)
+            newReward.title = titleFieldText
+            newReward.details = detailsFieldText
+            newReward.value = Float(valueFieldText) ?? 0
+            newReward.redeemed = false
+            newReward.annual = true
+        }
+        else {
+            for month in 1...12 {
+                let newReward = Reward(context: viewContext)
+                newReward.title = titleFieldText
+                newReward.details = detailsFieldText
+                newReward.value = Float(valueFieldText) ?? 0
+                newReward.redeemed = false
+                newReward.annual = false
+                newReward.month = Int16(month)
+            }
+        }
         
         saveContext()
         self.presentationMode.wrappedValue.dismiss()
@@ -94,10 +108,10 @@ struct AddMRView: View {
     }
 }
 
-struct AddMRView_Previews: PreviewProvider {
+struct AddRewardView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            AddMRView()
+            AddRewardView(annual: true)
         }
     }
 }

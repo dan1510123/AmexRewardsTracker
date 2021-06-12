@@ -13,22 +13,25 @@ struct ListView: View {
     
     let index: Int
     let annual: Bool
+    let month: Int
     
     var fetchRequest: FetchRequest<Reward>
     var rewards: FetchedResults<Reward> { fetchRequest.wrappedValue }
     
-    init(index: Int, annual: Bool) {
+    init(index: Int, annual: Bool, month: Int) {
         fetchRequest = FetchRequest<Reward>(entity: Reward.entity(),
             sortDescriptors: [
                 NSSortDescriptor(keyPath: \Reward.redeemed, ascending: true),
                 NSSortDescriptor(keyPath: \Reward.value, ascending: false),
                 NSSortDescriptor(keyPath: \Reward.title, ascending: true)
             ],
-            predicate: NSPredicate(format: "annual == \(annual)")
+            
+            predicate: NSPredicate(format: "annual == \(annual) and month == \(month)")
         )
         
         self.index = index
         self.annual = annual
+        self.month = month
     }
     
     var body: some View {
@@ -44,7 +47,7 @@ struct ListView: View {
                 .navigationTitle("Monthly Rewards")
                 .navigationBarItems(
                     leading: EditButton(),
-                    trailing: NavigationLink("Add Monthly Reward", destination: AddMRView())
+                    trailing: NavigationLink("Add Monthly Reward", destination: AddRewardView(annual: annual))
                 )
             }
         }
@@ -75,10 +78,10 @@ struct ListView: View {
     }
 }
 
-struct MRListView_Previews: PreviewProvider {
+struct ListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ListView(index: 202106, annual: true)
+            ListView(index: 202106, annual: true, month: 0)
         }
     }
 }

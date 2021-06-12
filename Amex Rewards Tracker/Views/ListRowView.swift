@@ -64,7 +64,7 @@ struct ListRowView: View {
     }
 }
 
-struct MRListRowView_Previews: PreviewProvider {
+struct ListRowView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             ListRowView(reward: Reward(), title: "good item", details: "deets", value: 10, redeemed: true)
