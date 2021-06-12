@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct MRListRowView: View {
+struct ListRowView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    @State var reward: MonthlyReward
+    @State var reward: Reward
     let title: String
     let details: String
     let value: Float
@@ -67,8 +67,8 @@ struct MRListRowView: View {
 struct MRListRowView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            MRListRowView(reward: MonthlyReward(), title: "good item", details: "deets", value: 10, redeemed: true)
-            MRListRowView(reward: MonthlyReward(), title: "bad item", details: "deets", value: 10, redeemed: false)
+            ListRowView(reward: Reward(), title: "good item", details: "deets", value: 10, redeemed: true)
+            ListRowView(reward: Reward(), title: "bad item", details: "deets", value: 10, redeemed: false)
         }
     }
 }

@@ -72,11 +72,12 @@ struct AddMRView: View {
     }
     
     private func onSavePressed() {
-        let newMonthlyReward = MonthlyReward(context: viewContext)
+        let newMonthlyReward = Reward(context: viewContext)
         newMonthlyReward.title = titleFieldText
         newMonthlyReward.details = detailsFieldText
         newMonthlyReward.value = Float(valueFieldText) ?? 0
         newMonthlyReward.redeemed = false
+        newMonthlyReward.annual = false
         
         
         saveContext()

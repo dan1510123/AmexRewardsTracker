@@ -24,7 +24,7 @@ struct FullTabView: View {
                     Text("Annual")
                 }
             
-            MRListView()
+            MRListPagesView()
                 .tabItem {
                     Image("month")
                         .resizable()
