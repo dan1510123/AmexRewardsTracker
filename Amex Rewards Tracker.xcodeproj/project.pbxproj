@@ -15,6 +15,7 @@
 		09F6E41126744E4900F37EC9 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E41026744E4900F37EC9 /* Persistence.swift */; };
 		09F6E416267459D600F37EC9 /* MRListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E415267459D600F37EC9 /* MRListRowView.swift */; };
 		09F6E41A2674606500F37EC9 /* AddMRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E4192674606500F37EC9 /* AddMRView.swift */; };
+		09F6E41C2674865500F37EC9 /* FullTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E41B2674865500F37EC9 /* FullTabView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		09F6E41026744E4900F37EC9 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		09F6E415267459D600F37EC9 /* MRListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRListRowView.swift; sourceTree = "<group>"; };
 		09F6E4192674606500F37EC9 /* AddMRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMRView.swift; sourceTree = "<group>"; };
+		09F6E41B2674865500F37EC9 /* FullTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullTabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				09F6E40026744B4900F37EC9 /* MRListView.swift */,
 				09F6E415267459D600F37EC9 /* MRListRowView.swift */,
 				09F6E4192674606500F37EC9 /* AddMRView.swift */,
+				09F6E41B2674865500F37EC9 /* FullTabView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -162,6 +165,7 @@
 				09F6E41126744E4900F37EC9 /* Persistence.swift in Sources */,
 				09F6E416267459D600F37EC9 /* MRListRowView.swift in Sources */,
 				09F6E41A2674606500F37EC9 /* AddMRView.swift in Sources */,
+				09F6E41C2674865500F37EC9 /* FullTabView.swift in Sources */,
 				09F6E3FF26744B4900F37EC9 /* Amex_Rewards_TrackerApp.swift in Sources */,
 				09F6E40F26744C4200F37EC9 /* AmexRewards.xcdatamodeld in Sources */,
 			);

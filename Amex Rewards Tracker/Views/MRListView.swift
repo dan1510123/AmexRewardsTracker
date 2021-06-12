@@ -6,10 +6,9 @@
 //
 
 import SwiftUI
-
 import CoreData
 
-struct ContentView: View {
+struct MRListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(sortDescriptors: [])
@@ -48,10 +47,10 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct MRListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContentView()
+            MRListView()
         }
     }
 }
