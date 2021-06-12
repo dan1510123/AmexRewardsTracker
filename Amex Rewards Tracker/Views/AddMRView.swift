@@ -14,10 +14,21 @@ struct AddMRView: View {
     @State var titleFieldText: String = ""
     @State var detailsFieldText: String = ""
     @State var yearNumber: Int16 = 2021
-    @State var valueFieldText: Float = 0
+    @State var valueFieldText: String = ""
+    
+    let formatter: NumberFormatter = {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            return formatter
+        }()
     
     var body: some View {
         ScrollView {
+            Text("Add Monthly Reward ⭐️")
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                .frame(maxWidth: 200, maxHeight: 50)
+                .font(.title)
             VStack {
                 TextField("Reward Title", text: $titleFieldText)
                     .padding(.horizontal)
@@ -27,10 +38,9 @@ struct AddMRView: View {
                 
                 TextField("Reward Details / Description", text: $detailsFieldText)
                     .padding(.horizontal)
-                    .frame(height: 200)
+                    .frame(height: 120)
                     .background(Color(#colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)))
                     .cornerRadius(10)
-                    .multilineTextAlignment(.leading)
                 
                 Picker("Year", selection: $yearNumber) {
                     ForEach(2021...2030, id: \.self) {
@@ -38,7 +48,7 @@ struct AddMRView: View {
                     }
                 }
                 
-                TextField("Reward Monthly Value", value: $valueFieldText, formatter: NumberFormatter())
+                TextField("Reward Monthly Value", text: $valueFieldText)
                     .keyboardType(.numberPad)
                     .padding(.horizontal)
                     .frame(height: 55)
@@ -58,15 +68,14 @@ struct AddMRView: View {
             }
             .padding(16)
         }
-        .navigationTitle("Add Monthly Reward ⭐️")
+        
     }
     
     private func onSavePressed() {
         let newMonthlyReward = MonthlyReward(context: viewContext)
         newMonthlyReward.title = titleFieldText
         newMonthlyReward.details = detailsFieldText
-        newMonthlyReward.value = valueFieldText
-        let x = Float(valueFieldText)
+        newMonthlyReward.value = Float(valueFieldText) ?? 0
         newMonthlyReward.redeemed = false
         
         
