@@ -18,20 +18,65 @@ struct MRListView: View {
     ])
     var monthlyRewards: FetchedResults<MonthlyReward>
     
+    @State var index: Int = Calendar.current.component(.year, from: Date())  * 100 + Calendar.current.component(.month, from: Date())
+    
+    
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(monthlyRewards) { reward in
-                    MRListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
-                }.onDelete(perform: deleteTasks)
+        TabView(selection: self.$index) {
+            NavigationView {
+                List {
+                    ForEach(monthlyRewards) { reward in
+                        MRListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
+                    }.onDelete(perform: deleteTasks)
+                }
+                .listStyle(DefaultListStyle())
+                .navigationTitle("Monthly Rewards")
+                .navigationBarItems(
+                    leading: EditButton(),
+                    trailing: NavigationLink("Add Monthly Reward", destination: AddMRView())
+                )
             }
-            .listStyle(DefaultListStyle())
-            .navigationTitle("Monthly Rewards")
-            .navigationBarItems(
-                leading: EditButton(),
-                trailing: NavigationLink("Add Monthly Reward", destination: AddMRView())
-            )
+            .tag(202105)
+            VStack {
+                Text(getTextFromTag(tag: index))
+                NavigationView {
+                    List {
+                        ForEach(monthlyRewards) { reward in
+                            MRListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
+                        }.onDelete(perform: deleteTasks)
+                    }
+                    .listStyle(DefaultListStyle())
+                    .navigationTitle("Monthly Rewards")
+                    .navigationBarItems(
+                        leading: EditButton(),
+                        trailing: NavigationLink("Add Monthly Reward", destination: AddMRView())
+                    )
+                }
+            }
+            .tag(202106)
+            NavigationView {
+                List {
+                    ForEach(monthlyRewards) { reward in
+                        MRListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
+                    }.onDelete(perform: deleteTasks)
+                }
+                .listStyle(DefaultListStyle())
+                .navigationTitle("Monthly Rewards")
+                .navigationBarItems(
+                    leading: EditButton(),
+                    trailing: NavigationLink("Add Monthly Reward", destination: AddMRView())
+                )
+            }
+            .tag(202107)
         }
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+    }
+    
+    private func getTextFromTag(tag: Int) -> String {
+        let month: Int = tag % 100
+        let year: Int = tag / 100
+        
+        return "\(month)-\(year)"
     }
     
     private func saveContext() {
