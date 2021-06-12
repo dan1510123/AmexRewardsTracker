@@ -19,7 +19,7 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(monthlyRewards) { reward in
-                    MRListRowView(title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value)
+                    MRListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
                 }.onDelete(perform: deleteTasks)
             }
             .listStyle(DefaultListStyle())
