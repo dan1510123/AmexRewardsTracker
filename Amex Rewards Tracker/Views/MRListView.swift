@@ -9,8 +9,6 @@ import SwiftUI
 
 import CoreData
 
-struct Test {}
-
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
@@ -21,15 +19,15 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(monthlyRewards) { reward in
-                    Text((reward.title ?? "Untitled") + ": " + (reward.details ?? "No details"))
+                    MRListRowView(title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value)
                 }.onDelete(perform: deleteTasks)
             }
-            .navigationTitle("Monthly Rewards List")
+            .listStyle(DefaultListStyle())
+            .navigationTitle("Monthly Rewards")
             .navigationBarItems(
                 leading: EditButton(),
-                trailing: Button("Add Monthly Reward") {
-                addMonthlyReward()
-            })
+                trailing: NavigationLink("Add Monthly Reward", destination: AddMRView())
+            )
         }
     }
     
@@ -45,16 +43,6 @@ struct ContentView: View {
     private func deleteTasks(offsets: IndexSet) {
         withAnimation {
             offsets.map { monthlyRewards[$0] }.forEach(viewContext.delete)
-            saveContext()
-        }
-    }
-    
-    private func addMonthlyReward() {
-        withAnimation {
-            let newMonthlyReward = MonthlyReward(context: viewContext)
-            newMonthlyReward.title = "New Reward \(Int.random(in: 1..<1000))"
-            newMonthlyReward.details = "Just deets"
-            
             saveContext()
         }
     }

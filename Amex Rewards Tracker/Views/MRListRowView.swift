@@ -11,7 +11,7 @@ struct MRListRowView: View {
     
     let title: String
     let details: String
-    let value: Double
+    let value: Float
     
     var body: some View {
         VStack {
@@ -19,7 +19,7 @@ struct MRListRowView: View {
                 Image(systemName: "checkmark.circle")
                 Text(title)
                 Spacer()
-                Text("\(String(format: "%.2f", value))")
+                Text("\(String(format: "$%.2f", value))")
             }
             HStack {
                 Text(details)

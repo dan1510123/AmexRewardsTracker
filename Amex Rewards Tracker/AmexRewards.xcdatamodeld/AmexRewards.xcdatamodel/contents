@@ -4,10 +4,12 @@
         <attribute name="details" optional="YES" attributeType="String"/>
         <attribute name="redeemed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="year" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <entity name="YearlyReward" representedClassName="YearlyReward" syncable="YES" codeGenerationType="class"/>
     <elements>
-        <element name="MonthlyReward" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="MonthlyReward" positionX="-63" positionY="-18" width="128" height="104"/>
         <element name="YearlyReward" positionX="-54" positionY="-9" width="128" height="29"/>
     </elements>
 </model>
