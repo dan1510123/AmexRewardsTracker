@@ -11,6 +11,10 @@
 		09F6E40126744B4900F37EC9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E40026744B4900F37EC9 /* ContentView.swift */; };
 		09F6E40326744B4A00F37EC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09F6E40226744B4A00F37EC9 /* Assets.xcassets */; };
 		09F6E40626744B4A00F37EC9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09F6E40526744B4A00F37EC9 /* Preview Assets.xcassets */; };
+		09F6E40F26744C4200F37EC9 /* AmexRewards.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E40D26744C4200F37EC9 /* AmexRewards.xcdatamodeld */; };
+		09F6E41126744E4900F37EC9 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E41026744E4900F37EC9 /* Persistence.swift */; };
+		09F6E416267459D600F37EC9 /* MRListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E415267459D600F37EC9 /* MRListRowView.swift */; };
+		09F6E41826745A9A00F37EC9 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E41726745A9A00F37EC9 /* SwiftUIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +24,10 @@
 		09F6E40226744B4A00F37EC9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		09F6E40526744B4A00F37EC9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		09F6E40726744B4A00F37EC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09F6E40E26744C4200F37EC9 /* AmexRewards.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AmexRewards.xcdatamodel; sourceTree = "<group>"; };
+		09F6E41026744E4900F37EC9 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		09F6E415267459D600F37EC9 /* MRListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MRListRowView.swift; sourceTree = "<group>"; };
+		09F6E41726745A9A00F37EC9 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,8 +60,11 @@
 		09F6E3FD26744B4900F37EC9 /* Amex Rewards Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				09F6E4142674598800F37EC9 /* Views */,
 				09F6E3FE26744B4900F37EC9 /* Amex_Rewards_TrackerApp.swift */,
 				09F6E40026744B4900F37EC9 /* ContentView.swift */,
+				09F6E41026744E4900F37EC9 /* Persistence.swift */,
+				09F6E40D26744C4200F37EC9 /* AmexRewards.xcdatamodeld */,
 				09F6E40226744B4A00F37EC9 /* Assets.xcassets */,
 				09F6E40726744B4A00F37EC9 /* Info.plist */,
 				09F6E40426744B4A00F37EC9 /* Preview Content */,
@@ -67,6 +78,15 @@
 				09F6E40526744B4A00F37EC9 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		09F6E4142674598800F37EC9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				09F6E415267459D600F37EC9 /* MRListRowView.swift */,
+				09F6E41726745A9A00F37EC9 /* SwiftUIView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +159,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				09F6E40126744B4900F37EC9 /* ContentView.swift in Sources */,
+				09F6E41126744E4900F37EC9 /* Persistence.swift in Sources */,
+				09F6E41826745A9A00F37EC9 /* SwiftUIView.swift in Sources */,
+				09F6E416267459D600F37EC9 /* MRListRowView.swift in Sources */,
 				09F6E3FF26744B4900F37EC9 /* Amex_Rewards_TrackerApp.swift in Sources */,
+				09F6E40F26744C4200F37EC9 /* AmexRewards.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +352,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		09F6E40D26744C4200F37EC9 /* AmexRewards.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				09F6E40E26744C4200F37EC9 /* AmexRewards.xcdatamodel */,
+			);
+			currentVersion = 09F6E40E26744C4200F37EC9 /* AmexRewards.xcdatamodel */;
+			path = AmexRewards.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 09F6E3F326744B4900F37EC9 /* Project object */;
 }

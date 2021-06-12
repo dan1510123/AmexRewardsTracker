@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct Amex_Rewards_TrackerApp: App {
+    
+    let persistenceContainer = PersistenceController.shared
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.managedObjectContext, persistenceContainer.container.viewContext)
         }
     }
 }
