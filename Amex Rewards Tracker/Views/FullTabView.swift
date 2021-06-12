@@ -12,7 +12,7 @@ struct FullTabView: View {
         TabView {
             Text("Under construction...")
                 .tabItem {
-                    Image("house.fill")
+                    Image("summary")
                     Text("Summary")
                 }
             

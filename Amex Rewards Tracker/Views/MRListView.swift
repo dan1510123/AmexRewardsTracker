@@ -11,7 +11,11 @@ import CoreData
 struct MRListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    @FetchRequest(sortDescriptors: [])
+    @FetchRequest(entity: MonthlyReward.entity(), sortDescriptors: [
+        NSSortDescriptor(keyPath: \MonthlyReward.redeemed, ascending: true),
+        NSSortDescriptor(keyPath: \MonthlyReward.value, ascending: false),
+        NSSortDescriptor(keyPath: \MonthlyReward.title, ascending: true)
+    ])
     var monthlyRewards: FetchedResults<MonthlyReward>
     
     var body: some View {

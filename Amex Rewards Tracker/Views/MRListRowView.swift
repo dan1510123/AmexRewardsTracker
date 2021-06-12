@@ -24,11 +24,9 @@ struct MRListRowView: View {
                     Spacer()
                     Text("\(String(format: "$%.2f", value))")
                 }
-                .padding()
                 
                 Text(details)
                     .frame(width: 200,height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    .padding()
             }
             
             Button(action: {
@@ -38,8 +36,9 @@ struct MRListRowView: View {
                     .resizable()
                     .frame(width: 50, height: 50)
             })
-            .padding()
+            .padding(10)
         }
+        .padding(20)
         .background(getBackgroundColor())
         .mask(RoundedRectangle(cornerRadius: 20.0))
     }
