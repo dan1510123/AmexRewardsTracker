@@ -14,11 +14,12 @@ struct ListView: View {
     let index: Int
     let annual: Bool
     let month: Int
+    let year: Int
     
     var fetchRequest: FetchRequest<Reward>
     var rewards: FetchedResults<Reward> { fetchRequest.wrappedValue }
     
-    init(index: Int, annual: Bool, month: Int) {
+    init(index: Int, annual: Bool, month: Int, year: Int) {
         fetchRequest = FetchRequest<Reward>(entity: Reward.entity(),
             sortDescriptors: [
                 NSSortDescriptor(keyPath: \Reward.redeemed, ascending: true),
@@ -26,17 +27,21 @@ struct ListView: View {
                 NSSortDescriptor(keyPath: \Reward.title, ascending: true)
             ],
             
-            predicate: NSPredicate(format: "annual == \(annual) and month == \(month)")
+            predicate: NSPredicate(format: "annual == \(annual) and month == \(month) and year == \(year)")
         )
         
         self.index = index
         self.annual = annual
         self.month = month
+        self.year = year
     }
     
     var body: some View {
         VStack {
-            Text(getTextFromTag(tag: index))
+            HStack {
+                Text(getTextFromTag(tag: index))
+                    .padding(20)
+            }
             NavigationView {
                 List {
                     ForEach(rewards) { reward in
@@ -81,7 +86,7 @@ struct ListView: View {
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ListView(index: 202106, annual: true, month: 0)
+            ListView(index: 202106, annual: true, month: 0, year: 2021)
         }
     }
 }
