@@ -45,13 +45,13 @@ struct ListView: View {
                     ListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
                 }.onDelete(perform: deleteTasks)
             }
-            .listStyle(DefaultListStyle())
             .navigationTitle("\(rewardType) Rewards")
             .navigationBarItems(
                 leading: EditButton(),
                 trailing: NavigationLink("Add \(rewardType) Reward", destination: AddRewardView(annual: annual, rewardType: rewardType))
             )
         }
+        
     }
     
     private func saveContext() {

@@ -105,6 +105,7 @@ struct AddRewardView: View {
         newReward.details = detailsFieldText
         newReward.value = Float(valueFieldText) ?? 0
         newReward.year = Int16(yearNumber) ?? 0
+        newReward.cardType = cardType
         newReward.redeemed = false
         
         return newReward

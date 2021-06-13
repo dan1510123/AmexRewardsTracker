@@ -39,12 +39,23 @@ struct ListRowView: View {
             .padding(10)
         }
         .padding(20)
-        .background(getBackgroundColor())
+        .listRowBackground(getBackgroundColor())
         .mask(RoundedRectangle(cornerRadius: 20.0))
     }
     
     private func getBackgroundColor() -> Color {
-        return redeemed ? Color(#colorLiteral(red: 0, green: 1, blue: 0.4970139265, alpha: 1)) : Color(#colorLiteral(red: 1, green: 0.9490906596, blue: 0.1527474225, alpha: 1))
+        if(redeemed) {
+            return Color(#colorLiteral(red: 0, green: 1, blue: 0.4970139265, alpha: 1))
+        }
+        else if (reward.cardType == "Gold") {
+            return Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1))
+        }
+        else if (reward.cardType == "Platinum") {
+            return Color(#colorLiteral(red: 0.8980392157, green: 0.8941176471, blue: 0.968627451, alpha: 1))
+        }
+        else{
+            return Color(#colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
+        }
     }
     
     private func onCheckPressed() {
