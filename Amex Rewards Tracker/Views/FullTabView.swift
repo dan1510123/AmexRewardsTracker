@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct FullTabView: View {
+    
+    let currentYear: Int = Calendar.current.component(.year, from: Date())
+    let currentMonth: Int = Calendar.current.component(.month, from: Date())
+    
     var body: some View {
         TabView {
             Text("Under construction...")
@@ -16,7 +20,7 @@ struct FullTabView: View {
                     Text("Summary")
                 }
             
-            Text("Under construction...")
+            AnnualListView()
                 .tabItem {
                     Image("year")
                         .resizable()
@@ -24,7 +28,7 @@ struct FullTabView: View {
                     Text("Annual")
                 }
             
-            MRListPagesView()
+            MonthlyListPagesView(year: currentYear, month: currentMonth)
                 .tabItem {
                     Image("month")
                         .resizable()

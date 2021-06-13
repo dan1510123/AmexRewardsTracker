@@ -13,7 +13,8 @@ struct AddRewardView: View {
     
     @State var titleFieldText: String = ""
     @State var detailsFieldText: String = ""
-    @State var yearNumber: Int16 = 2021
+    @State var yearNumber: String = "2021"
+    @State var cardType: String = "Gold"
     @State var valueFieldText: String = ""
     
     let formatter: NumberFormatter = {
@@ -23,10 +24,11 @@ struct AddRewardView: View {
         }()
     
     let annual: Bool
+    let rewardType: String
     
     var body: some View {
         ScrollView {
-            Text("Add Monthly Reward ⭐️")
+            Text("Add \(rewardType) Reward ⭐️")
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                 .frame(maxWidth: 200, maxHeight: 50)
@@ -45,12 +47,18 @@ struct AddRewardView: View {
                     .cornerRadius(10)
                 
                 Picker("Year", selection: $yearNumber) {
-                    ForEach(2021...2030, id: \.self) {
-                        Text(verbatim: "\($0)")
+                    ForEach(["2021", "2022"], id: \.self) {
+                        Text($0)
                     }
-                }
+                }.pickerStyle(SegmentedPickerStyle())
                 
-                TextField("Reward Monthly Value", text: $valueFieldText)
+                Picker("Card", selection: $cardType) {
+                    ForEach(["Gold", "Platinum"], id: \.self) {
+                        Text($0)
+                    }
+                }.pickerStyle(SegmentedPickerStyle())
+
+                TextField("Reward \(rewardType) Value", text: $valueFieldText)
                     .keyboardType(.numberPad)
                     .padding(.horizontal)
                     .frame(height: 55)
@@ -75,20 +83,13 @@ struct AddRewardView: View {
     
     private func onSavePressed() {
         if(annual) {
-            let newReward = Reward(context: viewContext)
-            newReward.title = titleFieldText
-            newReward.details = detailsFieldText
-            newReward.value = Float(valueFieldText) ?? 0
-            newReward.redeemed = false
+            let newReward: Reward = createReward()
             newReward.annual = true
+            newReward.month = 0
         }
         else {
             for month in 1...12 {
-                let newReward = Reward(context: viewContext)
-                newReward.title = titleFieldText
-                newReward.details = detailsFieldText
-                newReward.value = Float(valueFieldText) ?? 0
-                newReward.redeemed = false
+                let newReward: Reward = createReward()
                 newReward.annual = false
                 newReward.month = Int16(month)
             }
@@ -96,6 +97,17 @@ struct AddRewardView: View {
         
         saveContext()
         self.presentationMode.wrappedValue.dismiss()
+    }
+    
+    private func createReward() -> Reward {
+        let newReward = Reward(context: viewContext)
+        newReward.title = titleFieldText
+        newReward.details = detailsFieldText
+        newReward.value = Float(valueFieldText) ?? 0
+        newReward.year = Int16(yearNumber) ?? 0
+        newReward.redeemed = false
+        
+        return newReward
     }
     
     private func saveContext() {
@@ -111,7 +123,7 @@ struct AddRewardView: View {
 struct AddRewardView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            AddRewardView(annual: true)
+            AddRewardView(annual: true, rewardType: "Monthly")
         }
     }
 }

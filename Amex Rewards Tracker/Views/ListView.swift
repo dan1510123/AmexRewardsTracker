@@ -15,11 +15,12 @@ struct ListView: View {
     let annual: Bool
     let month: Int
     let year: Int
+    let rewardType: String
     
     var fetchRequest: FetchRequest<Reward>
     var rewards: FetchedResults<Reward> { fetchRequest.wrappedValue }
     
-    init(index: Int, annual: Bool, month: Int, year: Int) {
+    init(index: Int, annual: Bool, month: Int, year: Int, rewardType: String) {
         fetchRequest = FetchRequest<Reward>(entity: Reward.entity(),
             sortDescriptors: [
                 NSSortDescriptor(keyPath: \Reward.redeemed, ascending: true),
@@ -34,36 +35,23 @@ struct ListView: View {
         self.annual = annual
         self.month = month
         self.year = year
+        self.rewardType = rewardType
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                Text(getTextFromTag(tag: index))
-                    .padding(20)
+        NavigationView {
+            List {
+                ForEach(rewards) { reward in
+                    ListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
+                }.onDelete(perform: deleteTasks)
             }
-            NavigationView {
-                List {
-                    ForEach(rewards) { reward in
-                        ListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
-                    }.onDelete(perform: deleteTasks)
-                }
-                .listStyle(DefaultListStyle())
-                .navigationTitle("Monthly Rewards")
-                .navigationBarItems(
-                    leading: EditButton(),
-                    trailing: NavigationLink("Add Monthly Reward", destination: AddRewardView(annual: annual))
-                )
-            }
+            .listStyle(DefaultListStyle())
+            .navigationTitle("\(rewardType) Rewards")
+            .navigationBarItems(
+                leading: EditButton(),
+                trailing: NavigationLink("Add \(rewardType) Reward", destination: AddRewardView(annual: annual, rewardType: rewardType))
+            )
         }
-        .tag(index)
-    }
-    
-    private func getTextFromTag(tag: Int) -> String {
-        let month: Int = tag % 100
-        let year: Int = tag / 100
-        
-        return "\(month)-\(year)"
     }
     
     private func saveContext() {
@@ -86,7 +74,7 @@ struct ListView: View {
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ListView(index: 202106, annual: true, month: 0, year: 2021)
+            ListView(index: 202106, annual: true, month: 0, year: 2021, rewardType: "Monthly Rewards")
         }
     }
 }
