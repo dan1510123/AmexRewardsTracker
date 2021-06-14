@@ -18,6 +18,7 @@ struct ListView: View {
     let month: Int
     let year: Int
     
+    var managedObjectContext: NSManagedObjectContext!
     var fetchRequest: FetchRequest<Reward>
     var rewards: FetchedResults<Reward> { fetchRequest.wrappedValue }
     
@@ -59,7 +60,20 @@ struct ListView: View {
     private func deleteTasks(offsets: IndexSet) {
         if(adminMode.wrappedValue) {
             withAnimation {
-                offsets.map { rewards[$0] }.forEach(viewContext.delete)
+                offsets.forEach {
+                    let rewardToDelete: Reward = rewards[$0]
+                    let titleToDelete: String = rewardToDelete.title ?? ""
+                    let requestFullYear = NSFetchRequest<Reward>()
+                    requestFullYear.entity = Reward.entity()
+                    requestFullYear.predicate = NSPredicate(format: "annual == \(annual) and title == \"\(titleToDelete)\" and year == \(year)")
+                    do {
+                        let rewardsToDelete: [Reward] = try viewContext.fetch(requestFullYear)
+                        rewardsToDelete.forEach(viewContext.delete)
+                    }
+                    catch {
+                        print("Error in deleting items: \($0)")
+                    }
+                }
                 saveContext()
             }
         }

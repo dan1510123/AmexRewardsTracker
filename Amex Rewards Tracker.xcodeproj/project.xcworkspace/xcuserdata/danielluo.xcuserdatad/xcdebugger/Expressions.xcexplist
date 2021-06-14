@@ -16,5 +16,27 @@
             </PersistentString>
          </PersistentStrings>
       </ContextState>
+      <ContextState
+         contextName = "MonthlyListView.getMonthYearString():MonthlyListView.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in ListView.deleteTasks(offsets:):ListView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "rewards">
+            </PersistentString>
+            <PersistentString
+               value = "$0">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in closure #1 in ListView.deleteTasks(offsets:):ListView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "a">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>
