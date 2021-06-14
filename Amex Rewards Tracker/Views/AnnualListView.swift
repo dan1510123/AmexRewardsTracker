@@ -11,15 +11,15 @@ struct AnnualListView: View {
     
     @State var index: Int = Calendar.current.component(.year, from: Date())  * 100 + Calendar.current.component(.month, from: Date())
     @State var adminMode: Bool = false
-    
+    @State var month: Int = 0
+    @State var year: Int = Calendar.current.component(.year, from: Date())
     
     let annual = true
-    let currentYear: Int = Calendar.current.component(.year, from: Date())
     
     var body: some View {
         VStack(alignment: .center) {
             NavigationView {
-                ListView(index: index, annual: true, month: 0, year: currentYear, adminMode: $adminMode)
+                ListView(index: index, annual: true, month: $month, year: $year, adminMode: $adminMode)
                     .navigationTitle("Annual Rewards")
                     .navigationBarItems(
                         leading: getLeadingButton(),

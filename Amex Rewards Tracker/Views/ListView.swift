@@ -21,7 +21,7 @@ struct ListView: View {
     var fetchRequest: FetchRequest<Reward>
     var rewards: FetchedResults<Reward> { fetchRequest.wrappedValue }
     
-    init(index: Int, annual: Bool, month: Int, year: Int, adminMode: Binding<Bool>) {
+    init(index: Int, annual: Bool, month: Binding<Int>, year: Binding<Int>, adminMode: Binding<Bool>) {
         fetchRequest = FetchRequest<Reward>(entity: Reward.entity(),
             sortDescriptors: [
                 NSSortDescriptor(keyPath: \Reward.redeemed, ascending: true),
@@ -29,19 +29,19 @@ struct ListView: View {
                 NSSortDescriptor(keyPath: \Reward.title, ascending: true)
             ],
             
-            predicate: NSPredicate(format: "annual == \(annual) and month == \(month) and year == \(year)")
+            predicate: NSPredicate(format: "annual == \(annual) and month == \(month.wrappedValue) and year == \(year.wrappedValue)")
         )
         
         self.index = index
         self.annual = annual
-        self.month = month
-        self.year = year
+        self.month = month.wrappedValue
+        self.year = year.wrappedValue
         self.adminMode = adminMode
     }
     
     var body: some View {
         List {
-            ForEach(rewards) { reward in
+            ForEach(fetchRequest.wrappedValue) { reward in
                 ListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
             }.onDelete(perform: deleteTasks)
         }

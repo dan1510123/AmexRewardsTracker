@@ -10,10 +10,10 @@ import SwiftUI
 struct MonthlyListView: View {
     
     @State var adminMode: Bool = false
+    @State var month: Int
+    @State var year: Int
     
     let index: Int
-    let year: Int
-    let month: Int
     let annual = false
     
     init(year: Int, month: Int) {
@@ -28,7 +28,7 @@ struct MonthlyListView: View {
                 .padding(.top, 10)
                 .font(.system(size: 16.0, design: .monospaced))
             NavigationView {
-                ListView(index: index, annual: annual, month: month, year: year, adminMode: $adminMode)
+                ListView(index: index, annual: annual, month: $month, year: $year, adminMode: $adminMode)
                     .navigationTitle("Monthly Rewards")
                     .navigationBarItems(
                         leading: getLeadingButton(),
@@ -54,23 +54,21 @@ struct MonthlyListView: View {
         if(adminMode) {
             return AnyView(EditButton())
         }
-        else if(!annual) {
-            return AnyView(NavigationLink("Last Month", destination: MonthlyListView(year: year, month: (month + 11) % 12)).isDetailLink(false))
-        }
         else {
-            return AnyView(Text(""))
+            return AnyView(Button("Last Month", action:  {
+                month = (month + 11) % 12
+            }))
         }
     }
     
     private func getTrailingButton() -> some View {
         if(adminMode) {
-            return AnyView(NavigationLink("Add Monthly Reward", destination: AddRewardView(annual: annual, rewardType: "Monthly")).isDetailLink(false))
-        }
-        else if (!annual) {
-            return AnyView(NavigationLink("Next Month", destination: MonthlyListView(year: year, month: month + 1 % 12)))
+            return AnyView(NavigationLink("Add Monthly Reward", destination: AddRewardView(annual: annual, rewardType: "Monthly")))
         }
         else {
-            return AnyView(Text(""))
+            return AnyView(Button("Next Month", action:  {
+                month = (month + 1) % 12
+            }))
         }
     }
     
