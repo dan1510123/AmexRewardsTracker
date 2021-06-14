@@ -9,10 +9,12 @@ import SwiftUI
 
 struct MonthlyListView: View {
     
-    @State var index: Int
+    @State var adminMode: Bool = false
     
+    let index: Int
     let year: Int
     let month: Int
+    let annual = false
     
     init(year: Int, month: Int) {
         self.year = year
@@ -21,14 +23,61 @@ struct MonthlyListView: View {
     }
     
     var body: some View {
-        ListView(index: index, annual: false, month: month, year: year, rewardType: "Monthly")   
+        VStack(alignment: .center) {
+            Text(getMonthYearString())
+                .padding(.top, 10)
+                .font(.system(size: 16.0, design: .monospaced))
+            NavigationView {
+                ListView(index: index, annual: annual, month: month, year: year)
+                    .navigationTitle("Monthly Rewards")
+                    .navigationBarItems(
+                        leading: getLeadingButton(),
+                        trailing: getTrailingButton()
+                    )
+            }
+            Button(action: {
+                self.adminMode = !self.adminMode
+            }) {
+                Text("ADMIN MODE")
+                    .font(.system(size: 20.0, design: .monospaced))
+                    .foregroundColor(.white)
+            }
+            .frame(width: 160, height: 60)
+            .background(Color(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)))
+            .cornerRadius(50)
+            .padding(.bottom, 10)
+        }
+        .background(Color(#colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)))
     }
     
-    private func getTextFromTag(tag: Int) -> String {
-        let month: Int = tag % 100
-        let year: Int = tag / 100
+    private func getLeadingButton() -> some View {
+        if(adminMode) {
+            return AnyView(EditButton())
+        }
+        else if(!annual) {
+            return AnyView(NavigationLink("Last Month", destination: MonthlyListView(year: year, month: (month + 11) % 12)).isDetailLink(false))
+        }
+        else {
+            return AnyView(Text(""))
+        }
+    }
+    
+    private func getTrailingButton() -> some View {
+        if(adminMode) {
+            return AnyView(NavigationLink("Add Monthly Reward", destination: AddRewardView(annual: annual, rewardType: "Monthly")).isDetailLink(false))
+        }
+        else if (!annual) {
+            return AnyView(NavigationLink("Next Month", destination: MonthlyListView(year: year, month: month + 1 % 12)))
+        }
+        else {
+            return AnyView(Text(""))
+        }
+    }
+    
+    private func getMonthYearString() -> String {
+        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "Decemeber"]
         
-        return "\(month)-\(year)"
+        return "\(months[month - 1]) \(year)"
     }
 }
 

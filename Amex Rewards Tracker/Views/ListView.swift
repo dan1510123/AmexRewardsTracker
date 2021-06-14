@@ -15,13 +15,11 @@ struct ListView: View {
     let annual: Bool
     let month: Int
     let year: Int
-    let rewardType: String
-    @State var adminMode: Bool = false
     
     var fetchRequest: FetchRequest<Reward>
     var rewards: FetchedResults<Reward> { fetchRequest.wrappedValue }
     
-    init(index: Int, annual: Bool, month: Int, year: Int, rewardType: String) {
+    init(index: Int, annual: Bool, month: Int, year: Int) {
         fetchRequest = FetchRequest<Reward>(entity: Reward.entity(),
             sortDescriptors: [
                 NSSortDescriptor(keyPath: \Reward.redeemed, ascending: true),
@@ -36,45 +34,13 @@ struct ListView: View {
         self.annual = annual
         self.month = month
         self.year = year
-        self.rewardType = rewardType
     }
     
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(rewards) { reward in
-                    ListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
-                }.onDelete(perform: deleteTasks)
-            }
-            .navigationTitle("\(rewardType) Rewards")
-            .navigationBarItems(
-                leading: getLeadingButton(),
-                trailing: getTrailingButton()
-            )
-        }
-    }
-    
-    private func getLeadingButton() -> some View {
-        if(adminMode) {
-            return AnyView(EditButton())
-        }
-        else if(!annual) {
-            return AnyView(NavigationLink("Last Month", destination: ListView(index: index - 1, annual: false, month: month, year: year, rewardType: "Monthly")))
-        }
-        else {
-            return AnyView(Text(""))
-        }
-    }
-    
-    private func getTrailingButton() -> some View {
-        if(adminMode) {
-            return AnyView(NavigationLink("Add \(rewardType) Reward", destination: AddRewardView(annual: annual, rewardType: rewardType)))
-        }
-        else if (!annual) {
-            return AnyView(NavigationLink("Next Month", destination: ListView(index: index + 1, annual: false, month: month, year: year, rewardType: "Monthly")))
-        }
-        else {
-            return AnyView(Text(""))
+        List {
+            ForEach(rewards) { reward in
+                ListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
+            }.onDelete(perform: deleteTasks)
         }
     }
     
@@ -98,7 +64,7 @@ struct ListView: View {
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ListView(index: 202106, annual: true, month: 0, year: 2021, rewardType: "Monthly Rewards")
+            ListView(index: 202106, annual: true, month: 0, year: 2021)
         }
     }
 }
