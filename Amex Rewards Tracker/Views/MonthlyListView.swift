@@ -16,6 +16,8 @@ struct MonthlyListView: View {
     let index: Int
     let annual = false
     
+    let buttonWidth: CGFloat = 180
+    
     init(year: Int, month: Int) {
         self.year = year
         self.month = month
@@ -25,8 +27,9 @@ struct MonthlyListView: View {
     var body: some View {
         VStack(alignment: .center) {
             Text(getMonthYearString())
+                .underline()
                 .padding(.top, 10)
-                .font(.system(size: 16.0, design: .monospaced))
+                .font(.system(size: 18.0, design: .monospaced))
             NavigationView {
                 ListView(index: index, annual: annual, month: $month, year: $year, adminMode: $adminMode)
                     .navigationTitle("Monthly Rewards")
@@ -52,23 +55,35 @@ struct MonthlyListView: View {
     
     private func getLeadingButton() -> some View {
         if(adminMode) {
-            return AnyView(EditButton())
+            return AnyView(
+                EditButton()
+                    .frame(width: buttonWidth, alignment: .leading)
+            )
         }
         else {
-            return AnyView(Button("Last Month", action:  {
-                month = (month + 11) % 12
-            }))
+            return AnyView(
+                Button("Last Month", action:  {
+                    month = (month + 11) % 12
+                })
+                .frame(width: buttonWidth, alignment: .leading)
+            )
         }
     }
     
     private func getTrailingButton() -> some View {
         if(adminMode) {
-            return AnyView(NavigationLink("Add Monthly Reward", destination: AddRewardView(annual: annual, rewardType: "Monthly")))
+            return AnyView(
+                NavigationLink("Add Monthly Reward", destination: AddRewardView(annual: annual, rewardType: "Monthly"))
+                    .frame(width: buttonWidth, alignment: .trailing)
+            )
         }
         else {
-            return AnyView(Button("Next Month", action:  {
-                month = (month + 1) % 12
-            }))
+            return AnyView(
+                Button("Next Month", action:  {
+                    month = (month + 1) % 12
+                })
+                .frame(width: buttonWidth, alignment: .trailing)
+            )
         }
     }
     
