@@ -16,6 +16,7 @@ struct ListView: View {
     let month: Int
     let year: Int
     let rewardType: String
+    @State var adminMode: Bool = false
     
     var fetchRequest: FetchRequest<Reward>
     var rewards: FetchedResults<Reward> { fetchRequest.wrappedValue }
@@ -47,11 +48,34 @@ struct ListView: View {
             }
             .navigationTitle("\(rewardType) Rewards")
             .navigationBarItems(
-                leading: EditButton(),
-                trailing: NavigationLink("Add \(rewardType) Reward", destination: AddRewardView(annual: annual, rewardType: rewardType))
+                leading: getLeadingButton(),
+                trailing: getTrailingButton()
             )
         }
-        
+    }
+    
+    private func getLeadingButton() -> some View {
+        if(adminMode) {
+            return AnyView(EditButton())
+        }
+        else if(!annual) {
+            return AnyView(NavigationLink("Last Month", destination: ListView(index: index - 1, annual: false, month: month, year: year, rewardType: "Monthly")))
+        }
+        else {
+            return AnyView(Text(""))
+        }
+    }
+    
+    private func getTrailingButton() -> some View {
+        if(adminMode) {
+            return AnyView(NavigationLink("Add \(rewardType) Reward", destination: AddRewardView(annual: annual, rewardType: rewardType)))
+        }
+        else if (!annual) {
+            return AnyView(NavigationLink("Next Month", destination: ListView(index: index + 1, annual: false, month: month, year: year, rewardType: "Monthly")))
+        }
+        else {
+            return AnyView(Text(""))
+        }
     }
     
     private func saveContext() {

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		090531F42676C6D9008211B3 /* AnnualListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090531F32676C6D9008211B3 /* AnnualListView.swift */; };
-		09C2EE9F26751836009D992B /* MonthlyListPagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2EE9E26751836009D992B /* MonthlyListPagesView.swift */; };
+		09C2EE9F26751836009D992B /* MonthlyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2EE9E26751836009D992B /* MonthlyListView.swift */; };
 		09F6E3FF26744B4900F37EC9 /* Amex_Rewards_TrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E3FE26744B4900F37EC9 /* Amex_Rewards_TrackerApp.swift */; };
 		09F6E40126744B4900F37EC9 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E40026744B4900F37EC9 /* ListView.swift */; };
 		09F6E40326744B4A00F37EC9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09F6E40226744B4A00F37EC9 /* Assets.xcassets */; };
@@ -22,7 +22,7 @@
 
 /* Begin PBXFileReference section */
 		090531F32676C6D9008211B3 /* AnnualListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnualListView.swift; sourceTree = "<group>"; };
-		09C2EE9E26751836009D992B /* MonthlyListPagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyListPagesView.swift; sourceTree = "<group>"; };
+		09C2EE9E26751836009D992B /* MonthlyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyListView.swift; sourceTree = "<group>"; };
 		09F6E3FB26744B4900F37EC9 /* Amex Rewards Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Amex Rewards Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09F6E3FE26744B4900F37EC9 /* Amex_Rewards_TrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Amex_Rewards_TrackerApp.swift; sourceTree = "<group>"; };
 		09F6E40026744B4900F37EC9 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
@@ -92,7 +92,7 @@
 				09F6E415267459D600F37EC9 /* ListRowView.swift */,
 				09F6E4192674606500F37EC9 /* AddRewardView.swift */,
 				09F6E41B2674865500F37EC9 /* FullTabView.swift */,
-				09C2EE9E26751836009D992B /* MonthlyListPagesView.swift */,
+				09C2EE9E26751836009D992B /* MonthlyListView.swift */,
 				090531F32676C6D9008211B3 /* AnnualListView.swift */,
 			);
 			path = Views;
@@ -174,7 +174,7 @@
 				090531F42676C6D9008211B3 /* AnnualListView.swift in Sources */,
 				09F6E41C2674865500F37EC9 /* FullTabView.swift in Sources */,
 				09F6E3FF26744B4900F37EC9 /* Amex_Rewards_TrackerApp.swift in Sources */,
-				09C2EE9F26751836009D992B /* MonthlyListPagesView.swift in Sources */,
+				09C2EE9F26751836009D992B /* MonthlyListView.swift in Sources */,
 				09F6E40F26744C4200F37EC9 /* AmexRewards.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

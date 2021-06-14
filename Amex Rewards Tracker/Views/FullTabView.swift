@@ -28,7 +28,7 @@ struct FullTabView: View {
                     Text("Annual")
                 }
             
-            MonthlyListPagesView(year: currentYear, month: currentMonth)
+            MonthlyListView(year: currentYear, month: currentMonth)
                 .tabItem {
                     Image("month")
                         .resizable()
