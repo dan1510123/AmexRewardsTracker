@@ -28,7 +28,7 @@ struct MonthlyListView: View {
                 .padding(.top, 10)
                 .font(.system(size: 16.0, design: .monospaced))
             NavigationView {
-                ListView(index: index, annual: annual, month: month, year: year)
+                ListView(index: index, annual: annual, month: month, year: year, adminMode: $adminMode)
                     .navigationTitle("Monthly Rewards")
                     .navigationBarItems(
                         leading: getLeadingButton(),

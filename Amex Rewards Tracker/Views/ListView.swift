@@ -11,6 +11,8 @@ import CoreData
 struct ListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
+    var adminMode: Binding<Bool>
+    
     let index: Int
     let annual: Bool
     let month: Int
@@ -19,7 +21,7 @@ struct ListView: View {
     var fetchRequest: FetchRequest<Reward>
     var rewards: FetchedResults<Reward> { fetchRequest.wrappedValue }
     
-    init(index: Int, annual: Bool, month: Int, year: Int) {
+    init(index: Int, annual: Bool, month: Int, year: Int, adminMode: Binding<Bool>) {
         fetchRequest = FetchRequest<Reward>(entity: Reward.entity(),
             sortDescriptors: [
                 NSSortDescriptor(keyPath: \Reward.redeemed, ascending: true),
@@ -34,6 +36,7 @@ struct ListView: View {
         self.annual = annual
         self.month = month
         self.year = year
+        self.adminMode = adminMode
     }
     
     var body: some View {
@@ -54,9 +57,11 @@ struct ListView: View {
     }
     
     private func deleteTasks(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { rewards[$0] }.forEach(viewContext.delete)
-            saveContext()
+        if(adminMode.wrappedValue) {
+            withAnimation {
+                offsets.map { rewards[$0] }.forEach(viewContext.delete)
+                saveContext()
+            }
         }
     }
 }
@@ -64,7 +69,6 @@ struct ListView: View {
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ListView(index: 202106, annual: true, month: 0, year: 2021)
         }
     }
 }

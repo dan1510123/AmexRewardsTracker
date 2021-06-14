@@ -12,18 +12,33 @@ struct AnnualListView: View {
     @State var index: Int = Calendar.current.component(.year, from: Date())  * 100 + Calendar.current.component(.month, from: Date())
     @State var adminMode: Bool = false
     
+    
     let annual = true
     let currentYear: Int = Calendar.current.component(.year, from: Date())
     
     var body: some View {
-        NavigationView {
-            ListView(index: index, annual: true, month: 0, year: currentYear)
-                .navigationTitle("Annual Rewards")
-                .navigationBarItems(
-                    leading: getLeadingButton(),
-                    trailing: getTrailingButton()
-                )
+        VStack(alignment: .center) {
+            NavigationView {
+                ListView(index: index, annual: true, month: 0, year: currentYear, adminMode: $adminMode)
+                    .navigationTitle("Annual Rewards")
+                    .navigationBarItems(
+                        leading: getLeadingButton(),
+                        trailing: getTrailingButton()
+                    )
+            }
+            Button(action: {
+                self.adminMode = !self.adminMode
+            }) {
+                Text("ADMIN MODE")
+                    .font(.system(size: 20.0, design: .monospaced))
+                    .foregroundColor(.white)
+            }
+            .frame(width: 160, height: 60)
+            .background(Color(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)))
+            .cornerRadius(50)
+            .padding(.bottom, 10)
         }
+        .background(Color(#colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)))
     }
     
     private func getLeadingButton() -> some View {
