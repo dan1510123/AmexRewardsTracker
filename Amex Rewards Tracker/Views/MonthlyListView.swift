@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MonthlyListView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     
     @State var adminMode: Bool = false
     @State var month: Int

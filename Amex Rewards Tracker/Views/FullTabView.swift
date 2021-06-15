@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct FullTabView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     
     let currentYear: Int = Calendar.current.component(.year, from: Date())
     let currentMonth: Int = Calendar.current.component(.month, from: Date())
     
     var body: some View {
         TabView {
-            Text("Under construction...")
+            SummaryView()
                 .tabItem {
                     Image("summary")
                     Text("Summary")
