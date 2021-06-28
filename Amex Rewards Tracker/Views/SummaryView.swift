@@ -21,9 +21,9 @@ struct SummaryView: View {
                 .frame(maxWidth: 200, maxHeight: 50)
                 .font(.title)
             List {
-                ProgressTileView(rewardType: "Total", year: currentYear)
-                ProgressTileView(rewardType: "Platinum", year: currentYear)
-                ProgressTileView(rewardType: "Gold", year: currentYear)
+                ProgressTileView(rewardType: "Total", year: currentYear, shadowColor: Color.red)
+                ProgressTileView(rewardType: "Platinum", year: currentYear, shadowColor: Color.black)
+                ProgressTileView(rewardType: "Gold", year: currentYear, shadowColor: Color.yellow)
             }
             Spacer()
         }
