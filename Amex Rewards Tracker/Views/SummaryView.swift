@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct SummaryView: View {
-    @Environment(\.managedObjectContext) private var viewContext
     
+    let viewContext: NSManagedObjectContext
     let currentYear: Int = Calendar.current.component(.year, from: Date())
     
     var body: some View {
@@ -20,7 +21,7 @@ struct SummaryView: View {
                 .frame(maxWidth: 200, maxHeight: 50)
                 .font(.title)
             List {
-                ProgressTileView(rewardType: "Gold", year: currentYear)
+                ProgressTileView(rewardType: "Total", year: currentYear)
             }
             Spacer()
         }
@@ -29,6 +30,6 @@ struct SummaryView: View {
 
 struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
-        SummaryView()
+        Text("")//SummaryView()
     }
 }

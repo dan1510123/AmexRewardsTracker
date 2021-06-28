@@ -6,23 +6,25 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct MonthlyListView: View {
-    @Environment(\.managedObjectContext) private var viewContext
     
     @State var adminMode: Bool = false
     @State var month: Int
     @State var year: Int
     
+    let viewContext: NSManagedObjectContext
     let index: Int
     let annual = false
     
     let buttonWidth: CGFloat = 180
     
-    init(year: Int, month: Int) {
+    init(year: Int, month: Int, viewContext: NSManagedObjectContext) {
         self.year = year
         self.month = month
         self.index = year * 100 + month
+        self.viewContext = viewContext
     }
     
     var body: some View {
@@ -32,7 +34,7 @@ struct MonthlyListView: View {
                 .padding(.top, 10)
                 .font(.system(size: 18.0, design: .monospaced))
             NavigationView {
-                ListView(index: index, annual: annual, month: $month, year: $year, adminMode: $adminMode)
+                ListView(index: index, annual: annual, month: $month, year: $year, adminMode: $adminMode, viewContext: viewContext)
                     .navigationTitle("Monthly Rewards")
                     .navigationBarItems(
                         leading: getLeadingButton(),
@@ -97,6 +99,6 @@ struct MonthlyListView: View {
 
 struct MonthlyListView_Previews: PreviewProvider {
     static var previews: some View {
-        MonthlyListView(year: 2021, month: 06)
+        Text("")//MonthlyListView(year: 2021, month: 06)
     }
 }

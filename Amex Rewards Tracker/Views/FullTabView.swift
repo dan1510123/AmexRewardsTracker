@@ -15,13 +15,13 @@ struct FullTabView: View {
     
     var body: some View {
         TabView {
-            SummaryView()
+            SummaryView(viewContext: viewContext)
                 .tabItem {
                     Image("summary")
                     Text("Summary")
                 }
             
-            AnnualListView()
+            AnnualListView(viewContext: viewContext)
                 .tabItem {
                     Image("year")
                         .resizable()
@@ -29,7 +29,7 @@ struct FullTabView: View {
                     Text("Annual")
                 }
             
-            MonthlyListView(year: currentYear, month: currentMonth)
+            MonthlyListView(year: currentYear, month: currentMonth, viewContext: viewContext)
                 .tabItem {
                     Image("month")
                         .resizable()

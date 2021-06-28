@@ -11,7 +11,6 @@ import CoreData
 struct ProgressTileView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
-    @State var annualProgress: Float = 0.42
     var fetchRequest: FetchRequest<Reward>
     var rewards: FetchedResults<Reward> { fetchRequest.wrappedValue }
     
@@ -28,31 +27,22 @@ struct ProgressTileView: View {
             predicate = NSPredicate(format: "year == \(year) and cardType == \"\(rewardType)\"")
         }
         fetchRequest = FetchRequest<Reward>(entity: Reward.entity(),
-            sortDescriptors: [],
-            predicate: predicate
+            sortDescriptors: []
         )
-        
-        setSaved()
-        setTotal()
     }
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("\(rewardType) Rewards")
-                .font(.system(size: 24.0))
-                .underline()
-                .padding(.bottom, 10)
-            Text("$\(saved) of $\(total) earned")
-                .font(.system(size: 20.0))
-            ProgressBar(value: $annualProgress).frame(height: 20)
+            ProgressBarWrapped(rewards: self.rewards, rewardType: rewardType)
             Spacer()
         }.padding()
     }
     
-    private func setSaved() {
-        let r = rewards
+    private func getProgress(rewards: [Reward]) {
+        let r = self.fetchRequest.wrappedValue
+        print(r)
         for x in r {
-            print(r)
+            print(x)
         }
     }
     

@@ -9,8 +9,8 @@ import SwiftUI
 import CoreData
 
 struct ListView: View {
-    @Environment(\.managedObjectContext) private var viewContext
     
+    let viewContext: NSManagedObjectContext
     var adminMode: Binding<Bool>
     
     let index: Int
@@ -22,7 +22,7 @@ struct ListView: View {
     var fetchRequest: FetchRequest<Reward>
     var rewards: FetchedResults<Reward> { fetchRequest.wrappedValue }
     
-    init(index: Int, annual: Bool, month: Binding<Int>, year: Binding<Int>, adminMode: Binding<Bool>) {
+    init(index: Int, annual: Bool, month: Binding<Int>, year: Binding<Int>, adminMode: Binding<Bool>, viewContext: NSManagedObjectContext) {
         fetchRequest = FetchRequest<Reward>(entity: Reward.entity(),
             sortDescriptors: [
                 NSSortDescriptor(keyPath: \Reward.redeemed, ascending: true),
@@ -38,6 +38,7 @@ struct ListView: View {
         self.month = month.wrappedValue
         self.year = year.wrappedValue
         self.adminMode = adminMode
+        self.viewContext = viewContext
     }
     
     var body: some View {

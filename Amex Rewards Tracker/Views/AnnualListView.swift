@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct AnnualListView: View {
     
@@ -14,12 +15,13 @@ struct AnnualListView: View {
     @State var month: Int = 0
     @State var year: Int = Calendar.current.component(.year, from: Date())
     
+    let viewContext: NSManagedObjectContext
     let annual = true
     
     var body: some View {
         VStack(alignment: .center) {
             NavigationView {
-                ListView(index: index, annual: true, month: $month, year: $year, adminMode: $adminMode)
+                ListView(index: index, annual: true, month: $month, year: $year, adminMode: $adminMode, viewContext: viewContext)
                     .navigationTitle("Annual Rewards")
                     .navigationBarItems(
                         leading: getLeadingButton(),
@@ -62,6 +64,6 @@ struct AnnualListView: View {
 
 struct AnnualListView_Previews: PreviewProvider {
     static var previews: some View {
-        AnnualListView()
+        Text("")//AnnualListView()
     }
 }
