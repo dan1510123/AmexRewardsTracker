@@ -22,6 +22,8 @@ struct SummaryView: View {
                 .font(.title)
             List {
                 ProgressTileView(rewardType: "Total", year: currentYear)
+                ProgressTileView(rewardType: "Platinum", year: currentYear)
+                ProgressTileView(rewardType: "Gold", year: currentYear)
             }
             Spacer()
         }

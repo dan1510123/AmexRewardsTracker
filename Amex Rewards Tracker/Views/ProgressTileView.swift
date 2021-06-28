@@ -27,7 +27,8 @@ struct ProgressTileView: View {
             predicate = NSPredicate(format: "year == \(year) and cardType == \"\(rewardType)\"")
         }
         fetchRequest = FetchRequest<Reward>(entity: Reward.entity(),
-            sortDescriptors: []
+            sortDescriptors: [],
+            predicate: predicate
         )
     }
     

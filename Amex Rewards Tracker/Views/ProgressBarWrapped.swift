@@ -40,7 +40,7 @@ struct ProgressBarWrapped: View {
             .font(.system(size: 24.0))
             .underline()
             .padding(.bottom, 10)
-        Text("$\(self.redeemed) of $\(self.total) earned")
+        Text("\(String(format: "$%.0f", self.redeemed)) of \(String(format: "$%.0f", self.total)) earned")
             .font(.system(size: 20.0))
         ProgressBar(value: $annualProgress.progBarPercentage).frame(height: 20)
     }
