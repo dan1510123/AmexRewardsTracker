@@ -32,9 +32,6 @@ struct ProgressBarWrapped: View {
         }
         
         self.annualProgress.progBarPercentage = self.redeemed / self.total
-        print(redeemed)
-        print(total)
-        print(self.annualProgress)
     }
     
     var body: some View {
