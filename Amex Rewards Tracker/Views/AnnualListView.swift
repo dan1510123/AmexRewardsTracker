@@ -15,6 +15,8 @@ struct AnnualListView: View {
     @State var month: Int = 0
     @State var year: Int = Calendar.current.component(.year, from: Date())
     
+    let buttonWidth: CGFloat = 180
+    
     let viewContext: NSManagedObjectContext
     let annual = true
     
@@ -22,7 +24,7 @@ struct AnnualListView: View {
         VStack(alignment: .center) {
             NavigationView {
                 ListView(index: index, annual: true, month: $month, year: $year, adminMode: $adminMode, viewContext: viewContext)
-                    .navigationTitle("Annual Rewards")
+                    .navigationTitle("\(year) Annual Rewards".replacingOccurrences(of: ",", with: ""))
                     .navigationBarItems(
                         leading: getLeadingButton(),
                         trailing: getTrailingButton()
@@ -48,7 +50,12 @@ struct AnnualListView: View {
             return AnyView(EditButton())
         }
         else {
-            return AnyView(Text(""))
+            return AnyView(
+                Button("Last Year", action:  {
+                    year = year - 1
+                })
+                .frame(width: buttonWidth, alignment: .leading)
+            )
         }
     }
     
@@ -57,7 +64,12 @@ struct AnnualListView: View {
             return AnyView(NavigationLink("Add Annual Reward", destination: AddRewardView(annual: annual, rewardType: "Annual")).isDetailLink(false))
         }
         else {
-            return AnyView(Text(""))
+            return AnyView(
+                Button("Next Year", action:  {
+                    year = year + 1
+                })
+                .frame(width: buttonWidth, alignment: .trailing)
+            )
         }
     }
 }

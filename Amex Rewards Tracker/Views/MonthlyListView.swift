@@ -66,7 +66,8 @@ struct MonthlyListView: View {
         else {
             return AnyView(
                 Button("Last Month", action:  {
-                    month = (month + 11) % 12
+                    year = year + (Int)((month + 10) / 12 - 1)
+                    month = (month + 10) % 12 + 1
                 })
                 .frame(width: buttonWidth, alignment: .leading)
             )
@@ -83,7 +84,8 @@ struct MonthlyListView: View {
         else {
             return AnyView(
                 Button("Next Month", action:  {
-                    month = (month + 1) % 12
+                    year = year + (Int)(month / 12)
+                    month = month % 12 + 1
                 })
                 .frame(width: buttonWidth, alignment: .trailing)
             )
@@ -91,7 +93,7 @@ struct MonthlyListView: View {
     }
     
     private func getMonthYearString() -> String {
-        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "Decemeber"]
+        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         
         return "\(months[month - 1]) \(year)"
     }

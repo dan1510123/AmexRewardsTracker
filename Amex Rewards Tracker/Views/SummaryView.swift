@@ -11,22 +11,46 @@ import CoreData
 struct SummaryView: View {
     
     let viewContext: NSManagedObjectContext
-    let currentYear: Int = Calendar.current.component(.year, from: Date())
+    @State var year: Int = Calendar.current.component(.year, from: Date())
+    
+    let buttonWidth: CGFloat = 180
     
     var body: some View {
         VStack {
-            Text("Summary")
+            HStack {
+                getLeadingButton()
+                getTrailingButton()
+            }
+            Text("\(year) Summary".replacingOccurrences(of: ",", with: ""))
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                 .frame(maxWidth: 200, maxHeight: 50)
                 .font(.title)
             List {
-                ProgressTileView(rewardType: "Total", year: currentYear, shadowColor: Color.red)
-                ProgressTileView(rewardType: "Platinum", year: currentYear, shadowColor: Color.black)
-                ProgressTileView(rewardType: "Gold", year: currentYear, shadowColor: Color.yellow)
+                ProgressTileView(rewardType: "Total", year: year, shadowColor: Color.red)
+                ProgressTileView(rewardType: "Platinum", year: year, shadowColor: Color.black)
+                ProgressTileView(rewardType: "Gold", year: year, shadowColor: Color.yellow)
             }
             Spacer()
         }
+    }
+    
+    private func getLeadingButton() -> some View {
+        return AnyView(
+            Button("Last Year", action:  {
+                year = year - 1
+            })
+            .frame(width: buttonWidth, alignment: .leading)
+        )
+    }
+    
+    private func getTrailingButton() -> some View {
+        return AnyView(
+            Button("Next Year", action:  {
+                year = year + 1
+            })
+            .frame(width: buttonWidth, alignment: .trailing)
+        )
     }
 }
 
