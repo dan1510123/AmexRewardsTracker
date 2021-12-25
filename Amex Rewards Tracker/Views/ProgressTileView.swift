@@ -16,11 +16,11 @@ struct ProgressTileView: View {
     
     let rewardType: String
     let year: Int
-    let shadowColor: Color
+    let barColor: Color
     let saved: Int = 0
     let total: Int = 0
     
-    init(rewardType: String, year: Int, shadowColor: Color) {
+    init(rewardType: String, year: Int, barColor: Color) {
         self.rewardType = rewardType
         self.year = year
         var predicate = NSPredicate(format: "year == \(year)")
@@ -31,12 +31,12 @@ struct ProgressTileView: View {
             sortDescriptors: [],
             predicate: predicate
         )
-        self.shadowColor = shadowColor
+        self.barColor = barColor
     }
     
     var body: some View {
         VStack(alignment: .leading) {
-            ProgressBarWrapped(rewards: self.rewards, rewardType: rewardType, shadowColor: shadowColor)
+            ProgressBarWrapped(rewards: self.rewards, rewardType: rewardType, barColor: barColor)
             Spacer()
         }
         .padding()
@@ -58,7 +58,7 @@ struct ProgressTileView: View {
 struct ProgressTileView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            ProgressTileView(rewardType: "Gold", year: 2021, shadowColor: Color.yellow)
+            ProgressTileView(rewardType: "Gold", year: 2021, barColor: Color.yellow)
 //            ProgressTileView(rewardType: "Platinum", year: 2021)
 //            ProgressTileView(rewardType: "Total", year: 2021)
         }

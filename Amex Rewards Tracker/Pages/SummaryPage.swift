@@ -23,11 +23,17 @@ struct SummaryPage: View {
         VStack {
             NavigationView {
                 List {
-                    ProgressTileView(rewardType: "Total", year: year, shadowColor: Color.red)
-                    ProgressTileView(rewardType: "Platinum", year: year, shadowColor: Color.black)
-                    ProgressTileView(rewardType: "Gold", year: year, shadowColor: Color.yellow)
+                    ProgressTileView(rewardType: "Total",
+                                     year: year,
+                                     barColor: Color.blue)
+                    ProgressTileView(rewardType: "Platinum",
+                                     year: year,
+                                     barColor: .gray)
+                    ProgressTileView(rewardType: "Gold",
+                                     year: year,
+                                     barColor: Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1)))
                 }
-                .navigationTitle("\(year) Overview".replacingOccurrences(of: ",", with: ""))
+                .navigationTitle("\(year) Rewards".replacingOccurrences(of: ",", with: ""))
                 .navigationBarItems(
                     leading: getLeadingButton(),
                     trailing: getTrailingButton()

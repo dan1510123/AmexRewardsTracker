@@ -11,15 +11,15 @@ struct ProgressBarWrapped: View {
     
     let rewards: FetchedResults<Reward>
     let rewardType: String
-    let shadowColor: Color
+    let barColor: Color
     var redeemed: Float = 0
     var total: Float = 0
     var progressPercent: Float = 0
     
-    init(rewards: FetchedResults<Reward>, rewardType: String, shadowColor: Color) {
+    init(rewards: FetchedResults<Reward>, rewardType: String, barColor: Color) {
         self.rewards = rewards
         self.rewardType = rewardType
-        self.shadowColor = shadowColor
+        self.barColor = barColor
         self.setAnnualProgress()
     }
     
@@ -42,13 +42,8 @@ struct ProgressBarWrapped: View {
             .padding(.bottom, 10)
         Text("\(String(format: "$%.0f", self.redeemed)) of \(String(format: "$%.0f", self.total)) earned")
             .font(.system(size: 20.0))
-        ProgressBar(value: progressPercent, color: Color.red).frame(height: 20)
-            .shadow(color: shadowColor, radius: 2, x: 0, y: 0)
+        ProgressBar(value: progressPercent, color: barColor).frame(height: 20)
     }
-}
-
-class AnnualProgress: ObservableObject {
-    @Published var progBarPercentage : Float = 0.0
 }
 
 struct ProgressBarWrapped_Previews: PreviewProvider {
