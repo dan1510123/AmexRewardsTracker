@@ -73,7 +73,7 @@ struct MonthlyListPage: View {
     private func getTrailingButton() -> some View {
         if(adminMode) {
             return AnyView(
-                NavigationLink("Add Monthly Reward", destination: AddRewardView(annual: annual, rewardType: "Monthly"))
+                NavigationLink("Add Monthly Reward", destination: AddRewardPage(annual: annual, rewardType: "Monthly"))
                     .frame(width: buttonWidth, alignment: .trailing)
             )
         }

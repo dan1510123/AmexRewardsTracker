@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddRewardView: View {
+struct AddRewardPage: View {
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
     
@@ -124,7 +124,7 @@ struct AddRewardView: View {
 struct AddRewardView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            AddRewardView(annual: true, rewardType: "Monthly")
+            AddRewardPage(annual: true, rewardType: "Monthly")
         }
     }
 }

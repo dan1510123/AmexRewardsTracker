@@ -20,7 +20,7 @@
 		09F6E40F26744C4200F37EC9 /* AmexRewards.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E40D26744C4200F37EC9 /* AmexRewards.xcdatamodeld */; };
 		09F6E41126744E4900F37EC9 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E41026744E4900F37EC9 /* Persistence.swift */; };
 		09F6E416267459D600F37EC9 /* ListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E415267459D600F37EC9 /* ListRowView.swift */; };
-		09F6E41A2674606500F37EC9 /* AddRewardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E4192674606500F37EC9 /* AddRewardView.swift */; };
+		09F6E41A2674606500F37EC9 /* AddRewardPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E4192674606500F37EC9 /* AddRewardPage.swift */; };
 		09F6E41C2674865500F37EC9 /* FullTabPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F6E41B2674865500F37EC9 /* FullTabPage.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +40,7 @@
 		09F6E40E26744C4200F37EC9 /* AmexRewards.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AmexRewards.xcdatamodel; sourceTree = "<group>"; };
 		09F6E41026744E4900F37EC9 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		09F6E415267459D600F37EC9 /* ListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRowView.swift; sourceTree = "<group>"; };
-		09F6E4192674606500F37EC9 /* AddRewardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRewardView.swift; sourceTree = "<group>"; };
+		09F6E4192674606500F37EC9 /* AddRewardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRewardPage.swift; sourceTree = "<group>"; };
 		09F6E41B2674865500F37EC9 /* FullTabPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullTabPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,6 +61,7 @@
 				09C2EE9E26751836009D992B /* MonthlyListPage.swift */,
 				09F6E41B2674865500F37EC9 /* FullTabPage.swift */,
 				090531F32676C6D9008211B3 /* AnnualListPage.swift */,
+				09F6E4192674606500F37EC9 /* AddRewardPage.swift */,
 				09DB186726785F13002203D1 /* SummaryPage.swift */,
 			);
 			path = Pages;
@@ -120,7 +121,6 @@
 			children = (
 				09F6E40026744B4900F37EC9 /* ListView.swift */,
 				09F6E415267459D600F37EC9 /* ListRowView.swift */,
-				09F6E4192674606500F37EC9 /* AddRewardView.swift */,
 				09DB186B267862D7002203D1 /* ProgressTileView.swift */,
 			);
 			path = Views;
@@ -200,7 +200,7 @@
 				09F6E41126744E4900F37EC9 /* Persistence.swift in Sources */,
 				098A71CC26897E4B00DE0134 /* ProgressBarWrapped.swift in Sources */,
 				09F6E416267459D600F37EC9 /* ListRowView.swift in Sources */,
-				09F6E41A2674606500F37EC9 /* AddRewardView.swift in Sources */,
+				09F6E41A2674606500F37EC9 /* AddRewardPage.swift in Sources */,
 				090531F42676C6D9008211B3 /* AnnualListPage.swift in Sources */,
 				09F6E41C2674865500F37EC9 /* FullTabPage.swift in Sources */,
 				09F6E3FF26744B4900F37EC9 /* Amex_Rewards_TrackerApp.swift in Sources */,

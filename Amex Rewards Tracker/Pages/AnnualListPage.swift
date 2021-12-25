@@ -61,7 +61,7 @@ struct AnnualListPage: View {
     
     private func getTrailingButton() -> some View {
         if(adminMode) {
-            return AnyView(NavigationLink("Add Annual Reward", destination: AddRewardView(annual: annual, rewardType: "Annual")).isDetailLink(false))
+            return AnyView(NavigationLink("Add Annual Reward", destination: AddRewardPage(annual: annual, rewardType: "Annual")).isDetailLink(false))
         }
         else {
             return AnyView(
