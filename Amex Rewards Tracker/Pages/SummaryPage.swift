@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct SummaryView: View {
+struct SummaryPage: View {
     
     let viewContext: NSManagedObjectContext
     @State var year: Int = Calendar.current.component(.year, from: Date())
@@ -17,21 +17,18 @@ struct SummaryView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                getLeadingButton()
-                getTrailingButton()
+            NavigationView {
+                List {
+                    ProgressTileView(rewardType: "Total", year: year, shadowColor: Color.red)
+                    ProgressTileView(rewardType: "Platinum", year: year, shadowColor: Color.black)
+                    ProgressTileView(rewardType: "Gold", year: year, shadowColor: Color.yellow)
+                }
+                .navigationTitle("\(year) Overview".replacingOccurrences(of: ",", with: ""))
+                .navigationBarItems(
+                    leading: getLeadingButton(),
+                    trailing: getTrailingButton()
+                )
             }
-            Text("\(year) Summary".replacingOccurrences(of: ",", with: ""))
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
-                .frame(maxWidth: 200, maxHeight: 50)
-                .font(.title)
-            List {
-                ProgressTileView(rewardType: "Total", year: year, shadowColor: Color.red)
-                ProgressTileView(rewardType: "Platinum", year: year, shadowColor: Color.black)
-                ProgressTileView(rewardType: "Gold", year: year, shadowColor: Color.yellow)
-            }
-            Spacer()
         }
     }
     

@@ -14,7 +14,7 @@ struct Amex_Rewards_TrackerApp: App {
     
     var body: some Scene {
         WindowGroup {
-            FullTabView()
+            FullTabPage()
                 .environment(\.managedObjectContext, persistenceContainer.container.viewContext)
         }
     }

@@ -38,7 +38,10 @@ struct ProgressTileView: View {
         VStack(alignment: .leading) {
             ProgressBarWrapped(rewards: self.rewards, rewardType: rewardType, shadowColor: shadowColor)
             Spacer()
-        }.padding()
+        }
+        .padding()
+        .cornerRadius(0)
+        
     }
     
     private func getProgress(rewards: [Reward]) {

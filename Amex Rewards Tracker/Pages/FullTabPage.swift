@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FullTabView: View {
+struct FullTabPage: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     let currentYear: Int = Calendar.current.component(.year, from: Date())
@@ -15,13 +15,13 @@ struct FullTabView: View {
     
     var body: some View {
         TabView {
-            SummaryView(viewContext: viewContext)
+            SummaryPage(viewContext: viewContext)
                 .tabItem {
                     Image("summary")
                     Text("Summary")
                 }
             
-            AnnualListView(viewContext: viewContext)
+            AnnualListPage(viewContext: viewContext)
                 .tabItem {
                     Image("year")
                         .resizable()
@@ -29,7 +29,7 @@ struct FullTabView: View {
                     Text("Annual")
                 }
             
-            MonthlyListView(year: currentYear, month: currentMonth, viewContext: viewContext)
+            MonthlyListPage(year: currentYear, month: currentMonth, viewContext: viewContext)
                 .tabItem {
                     Image("month")
                         .resizable()
@@ -42,6 +42,6 @@ struct FullTabView: View {
 
 struct FullTabView_Previews: PreviewProvider {
     static var previews: some View {
-        FullTabView()
+        FullTabPage()
     }
 }

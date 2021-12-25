@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct AnnualListView: View {
+struct AnnualListPage: View {
     
     @State var index: Int = Calendar.current.component(.year, from: Date())  * 100 + Calendar.current.component(.month, from: Date())
     @State var adminMode: Bool = false

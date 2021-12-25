@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct MonthlyListView: View {
+struct MonthlyListPage: View {
     
     @State var adminMode: Bool = false
     @State var month: Int
@@ -29,13 +29,9 @@ struct MonthlyListView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Text(getMonthYearString())
-                .underline()
-                .padding(.top, 10)
-                .font(.system(size: 18.0, design: .monospaced))
             NavigationView {
                 ListView(index: index, annual: annual, month: $month, year: $year, adminMode: $adminMode, viewContext: viewContext)
-                    .navigationTitle("Monthly Rewards")
+                    .navigationTitle(getMonthYearString())
                     .navigationBarItems(
                         leading: getLeadingButton(),
                         trailing: getTrailingButton()
@@ -93,9 +89,9 @@ struct MonthlyListView: View {
     }
     
     private func getMonthYearString() -> String {
-        let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
         
-        return "\(months[month - 1]) \(year)"
+        return "\(months[month - 1]) \(year) Rewards"
     }
 }
 
