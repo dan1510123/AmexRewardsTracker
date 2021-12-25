@@ -15,6 +15,10 @@ struct SummaryPage: View {
     
     let buttonWidth: CGFloat = 180
     
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
+    }
+    
     var body: some View {
         VStack {
             NavigationView {
@@ -29,6 +33,7 @@ struct SummaryPage: View {
                     trailing: getTrailingButton()
                 )
             }
+            .background(Color.white)
         }
     }
     

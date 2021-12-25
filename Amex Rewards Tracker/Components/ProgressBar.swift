@@ -8,7 +8,13 @@
 import SwiftUI
 
 struct ProgressBar: View {
-    @Binding var value: Float
+    let barColor: Color
+    var value: Float
+    
+    init(value: Float, color: Color) {
+        self.barColor = color
+        self.value = value
+    }
     
     var body: some View {
         GeometryReader { geometry in

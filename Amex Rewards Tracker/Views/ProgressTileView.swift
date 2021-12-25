@@ -40,8 +40,6 @@ struct ProgressTileView: View {
             Spacer()
         }
         .padding()
-        .cornerRadius(0)
-        
     }
     
     private func getProgress(rewards: [Reward]) {

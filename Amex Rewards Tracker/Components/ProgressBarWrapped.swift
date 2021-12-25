@@ -14,7 +14,7 @@ struct ProgressBarWrapped: View {
     let shadowColor: Color
     var redeemed: Float = 0
     var total: Float = 0
-    @ObservedObject var annualProgress = AnnualProgress()
+    var progressPercent: Float = 0
     
     init(rewards: FetchedResults<Reward>, rewardType: String, shadowColor: Color) {
         self.rewards = rewards
@@ -30,8 +30,9 @@ struct ProgressBarWrapped: View {
                 self.redeemed += reward.value
             }
         }
-        
-        self.annualProgress.progBarPercentage = self.redeemed / self.total
+        if self.total > 0 {
+            self.progressPercent = self.redeemed / self.total
+        }
     }
     
     var body: some View {
@@ -41,7 +42,7 @@ struct ProgressBarWrapped: View {
             .padding(.bottom, 10)
         Text("\(String(format: "$%.0f", self.redeemed)) of \(String(format: "$%.0f", self.total)) earned")
             .font(.system(size: 20.0))
-        ProgressBar(value: $annualProgress.progBarPercentage).frame(height: 20)
+        ProgressBar(value: progressPercent, color: Color.red).frame(height: 20)
             .shadow(color: shadowColor, radius: 2, x: 0, y: 0)
     }
 }
