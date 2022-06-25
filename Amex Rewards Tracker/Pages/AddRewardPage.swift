@@ -47,13 +47,13 @@ struct AddRewardPage: View {
                     .cornerRadius(10)
                 
                 Picker("Year", selection: $yearNumber) {
-                    ForEach(["2021", "2022"], id: \.self) {
+                    ForEach(["2022", "2023"], id: \.self) {
                         Text($0)
                     }
                 }.pickerStyle(SegmentedPickerStyle())
                 
                 Picker("Card", selection: $cardType) {
-                    ForEach(["Gold", "Platinum"], id: \.self) {
+                    ForEach(["Gold", "Platinum", "Reserve"], id: \.self) {
                         Text($0)
                     }
                 }.pickerStyle(SegmentedPickerStyle())
