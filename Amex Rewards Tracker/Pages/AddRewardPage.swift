@@ -53,7 +53,7 @@ struct AddRewardPage: View {
                 }.pickerStyle(SegmentedPickerStyle())
                 
                 Picker("Card", selection: $cardType) {
-                    ForEach(["Gold", "Platinum", "Reserve"], id: \.self) {
+                    ForEach(["Gold", "Platinum", "Delta Gold", "Delta Reserve"], id: \.self) {
                         Text($0)
                     }
                 }.pickerStyle(SegmentedPickerStyle())
