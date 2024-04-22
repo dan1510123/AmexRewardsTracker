@@ -13,7 +13,7 @@ struct AddRewardPage: View {
     
     @State var titleFieldText: String = ""
     @State var detailsFieldText: String = ""
-    @State var yearNumber: String = "2021"
+    @State var yearNumber: String = "2024"
     @State var cardType: String = "Gold"
     @State var valueFieldText: String = ""
     
@@ -47,16 +47,16 @@ struct AddRewardPage: View {
                     .cornerRadius(10)
                 
                 Picker("Year", selection: $yearNumber) {
-                    ForEach(["2022", "2023"], id: \.self) {
+                    ForEach(["2022", "2023", "2024"], id: \.self) {
                         Text($0)
                     }
-                }.pickerStyle(SegmentedPickerStyle())
+                }
                 
                 Picker("Card", selection: $cardType) {
                     ForEach(["Gold", "Platinum", "Delta Gold", "Delta Reserve"], id: \.self) {
                         Text($0)
                     }
-                }.pickerStyle(SegmentedPickerStyle())
+                }
 
                 TextField("Reward \(rewardType) Value", text: $valueFieldText)
                     .keyboardType(.numberPad)

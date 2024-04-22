@@ -35,9 +35,7 @@ struct SummaryPage: View {
                     ProgressTileView(rewardType: "Delta Reserve",
                                      year: year,
                                      barColor: Color(#colorLiteral(red: 0, green: 0, blue: 0.392, alpha: 1)))
-                    ProgressTileView(rewardType: "Delta Gold",
-                                     year: year,
-                                     barColor: Color(#colorLiteral(red: 0.9607843137, green: 0.6901960784, blue: 0.2588235294, alpha: 1)))
+
                 }
                 .navigationTitle("\(year) Rewards".replacingOccurrences(of: ",", with: ""))
                 .navigationBarItems(
