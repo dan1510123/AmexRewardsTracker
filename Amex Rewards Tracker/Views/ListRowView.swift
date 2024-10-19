@@ -18,29 +18,61 @@ struct ListRowView: View {
     
     var body: some View {
         HStack {
-            VStack {
+            getCardIcon()
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 60, height: 40)
+            
+            VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     Text(title)
+                        .font(.headline)
                     Spacer()
                     Text("\(String(format: "$%.2f", value))")
+                        .font(.subheadline)
                 }
                 
                 Text(details)
-                    .frame(width: 200,height: 60, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    .font(.subheadline)
+                    .lineLimit(2)
             }
             
             Button(action: {
-                onCheckPressed()
-            }, label: {
-                Image(systemName: "checkmark.circle")
+                withAnimation {
+                    onCheckPressed()
+                }
+            }) {
+                Image(systemName: redeemed ? "checkmark.circle.fill" : "checkmark.circle")
                     .resizable()
-                    .frame(width: 50, height: 50)
-            })
-            .padding(10)
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(redeemed ? nil : .gray)
+                    .animation(.easeInOut, value: redeemed)
+            }
+            .padding(.leading, 10)
         }
-        .padding(20)
-        .listRowBackground(getBackgroundColor())
-        .mask(RoundedRectangle(cornerRadius: 20.0))
+        .padding()
+        .background(getBackgroundColor())
+        .cornerRadius(12)
+        .shadow(color: Color.black.opacity(0.1), radius: 6, x: 0, y: 3)
+        .listRowInsets(EdgeInsets()) // Allow full-width custom styling
+    }
+    
+    private func getCardIcon() -> Image {
+        if (reward.cardType == "Gold") {
+            return Image("goldCardIcon")
+        }
+        else if (reward.cardType == "Platinum") {
+            return Image("platCardIcon")
+        }
+        else if (reward.cardType == "Delta Gold") {
+            return Image("deltaGoldCardIcon")
+        }
+        else if (reward.cardType == "Delta Reserve") {
+            return Image("deltaReserveCardIcon")
+        }
+        else{
+            return Image("")
+        }
     }
     
     private func getBackgroundColor() -> Color {
@@ -54,18 +86,18 @@ struct ListRowView: View {
             return Color(#colorLiteral(red: 0.8980392157, green: 0.8941176471, blue: 0.968627451, alpha: 1))
         }
         else if (reward.cardType == "Delta Gold") {
-            return Color(#colorLiteral(red: 0.9607843137, green: 0.6901960784, blue: 0.2588235294, alpha: 1))
+            return Color(#colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1))
         }
         else if (reward.cardType == "Delta Reserve") {
-            return Color(#colorLiteral(red: 0.2, green: 0.2, blue: 1, alpha: 1))
+            return Color(#colorLiteral(red: 0.6868614554, green: 0.403000772, blue: 1, alpha: 1))
         }
         else{
             return Color(#colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
         }
     }
-    
+
     private func onCheckPressed() {
-        redeemed = !redeemed
+        redeemed.toggle()
         reward.redeemed = redeemed
         
         saveContext()
@@ -79,13 +111,21 @@ struct ListRowView: View {
             fatalError("Unresolved error: \(error)")
         }
     }
+    
+    private func loadImage(from path: String) -> UIImage? {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+
+        return UIImage(contentsOfFile: documentsDirectory.appendingPathComponent(path).path)
+    }
 }
 
 struct ListRowView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            ListRowView(reward: Reward(), title: "good item", details: "deets", value: 10, redeemed: true)
-            ListRowView(reward: Reward(), title: "bad item", details: "deets", value: 10, redeemed: false)
+            ListRowView(reward: Reward(), title: "Gold Reward", details: "Description of the reward", value: 50.0, redeemed: true)
+            ListRowView(reward: Reward(), title: "Platinum Reward", details: "Another reward detail", value: 100.0, redeemed: false)
         }
+        .padding()
+        .background(Color(UIColor.systemBackground))
     }
 }

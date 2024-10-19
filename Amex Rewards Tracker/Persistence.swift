@@ -1,23 +1,32 @@
 //
-//  Persistence.swift
+//  PersistenceController.swift
 //  Amex Rewards Tracker
 //
-//  Created by Daniel Luo on 6/11/21.
+//  Created by Daniel Luo on 6/11/24.
 //
 
 import CoreData
 
 struct PersistenceController {
     static let shared = PersistenceController()
-    
+
+    static var preview: PersistenceController = {
+        let result = PersistenceController(inMemory: true)
+        let viewContext = result.container.viewContext
+        // Optionally, add some mock data here for the preview
+        return result
+    }()
+
     let container: NSPersistentContainer
-    
-    init() {
+
+    init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "AmexRewards")
-        
-        container.loadPersistentStores  { (storeDescription, error) in
+        if inMemory {
+            container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
+        }
+        container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
-                fatalError("Unresolved error: \(error)")
+                fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         }
     }

@@ -11,8 +11,8 @@ import CoreData
 struct MonthlyListPage: View {
     
     @State var adminMode: Bool = false
-    @State var month: Int
-    @State var year: Int
+    @State var month: Int = 1
+    @State var year: Int = 1
     
     let viewContext: NSManagedObjectContext
     let index: Int
@@ -32,71 +32,86 @@ struct MonthlyListPage: View {
             NavigationView {
                 ListView(index: index, annual: annual, month: $month, year: $year, adminMode: $adminMode, viewContext: viewContext)
                     .navigationTitle(getMonthYearString())
+                    .foregroundColor(.primary)
                     .navigationBarItems(
                         leading: getLeadingButton(),
                         trailing: getTrailingButton()
                     )
             }
+            
             Button(action: {
-                self.adminMode = !self.adminMode
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    self.adminMode.toggle()
+                }
             }) {
                 Text("ADMIN MODE")
-                    .font(.system(size: 20.0, design: .monospaced))
+                    .font(.system(size: 18, weight: .semibold)) // Updated font
                     .foregroundColor(.white)
+                    .padding() // Added padding for a better touch area
+                    .frame(maxWidth: .infinity)
+                    .background(adminMode ? Color.blue : Color.gray) // Animated color change
+                    .clipShape(Capsule()) // Capsule shape for a softer look
             }
-            .frame(width: 160, height: 60)
-            .background(Color(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)))
-            .cornerRadius(50)
+            .padding(.horizontal, 40) // Additional padding for spacing
             .padding(.bottom, 10)
         }
-        .background(Color(#colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)))
+        .background(Color(UIColor.systemBackground))
     }
     
     private func getLeadingButton() -> some View {
-        if(adminMode) {
-            return AnyView(
-                EditButton()
-                    .frame(width: buttonWidth, alignment: .leading)
-            )
-        }
-        else {
-            return AnyView(
-                Button("Last Month", action:  {
+        Group {
+            if(adminMode) {
+                    EditButton()
+                        .frame(width: buttonWidth, alignment: .leading)
+            } else {
+                Button(action:  {
                     year = year + (Int)((month + 10) / 12 - 1)
                     month = (month + 10) % 12 + 1
-                })
-                .frame(width: buttonWidth, alignment: .leading)
-            )
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("Prev")
+                    }
+                }
+            }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .foregroundColor(.accentColor)
     }
     
     private func getTrailingButton() -> some View {
-        if(adminMode) {
-            return AnyView(
+        Group {
+            if(adminMode) {
                 NavigationLink("Add Monthly Reward", destination: AddRewardPage(annual: annual, rewardType: "Monthly"))
-                    .frame(width: buttonWidth, alignment: .trailing)
-            )
-        }
-        else {
-            return AnyView(
-                Button("Next Month", action:  {
+            } else {
+                Button(action:  {
                     year = year + (Int)(month / 12)
                     month = month % 12 + 1
-                })
-                .frame(width: buttonWidth, alignment: .trailing)
-            )
+                }){
+                    HStack {
+                        Text("Next")
+                        Image(systemName: "chevron.right")
+                    }
+                }
+            }
         }
+        .frame(maxWidth: .infinity, alignment: .trailing)
+        .foregroundColor(.accentColor)
     }
     
     private func getMonthYearString() -> String {
-        let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        // Define months array outside the string construction
+        let months: [String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
         
-        return "\(months[month - 1]) \(year) Rewards"
+        // Use a separate variable to get the month name
+        let monthName = (month >= 1 && month <= 12) ? months[month - 1] : "Invalid Month"
+        
+        return "\(monthName) \(year) Rewards"
     }
 }
 
-struct MonthlyListView_Previews: PreviewProvider {
+struct MonthlyListPage_Previews: PreviewProvider {
     static var previews: some View {
-        Text("")//MonthlyListView(year: 2021, month: 06)
+        MonthlyListPage(year: 2024, month: 10, viewContext: PersistenceController.preview.container.viewContext)
     }
 }
