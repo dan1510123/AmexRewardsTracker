@@ -18,7 +18,7 @@ struct MonthlyListPage: View {
     let index: Int
     let annual = false
     
-    let buttonWidth: CGFloat = 180
+    let buttonWidth: CGFloat = 30
     
     let monthNames: [String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     
@@ -39,6 +39,11 @@ struct MonthlyListPage: View {
                         leading: getLeadingButton(),
                         trailing: getTrailingButton()
                     )
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            currentMonthIndicator
+                        }
+                    }
             }
             
             Button(action: {
@@ -87,19 +92,18 @@ struct MonthlyListPage: View {
         Group {
             if adminMode {
                 NavigationLink("Add Monthly Reward", destination: AddRewardPage(annual: annual, rewardType: "Monthly"))
-            } else {
-                if month != 12 {
-                    Button(action:  {
-                        year = year + (Int)(month / 12)
-                        month = month + 1
-                    }){
-                        HStack {
-                            Text(monthNames[month])
-                            Image(systemName: "chevron.right")
-                        }
+            } else if month != 12 {
+                Button(action:  {
+                    year = year + (Int)(month / 12)
+                    month = month + 1
+                }){
+                    HStack {
+                        Text(monthNames[month])
+                        Image(systemName: "chevron.right")
                     }
                 }
             }
+            
         }
         .frame(maxWidth: .infinity, alignment: .trailing)
         .foregroundColor(.accentColor)
@@ -110,6 +114,21 @@ struct MonthlyListPage: View {
         let monthName = (month >= 1 && month <= 12) ? monthNames[month - 1] : "Invalid Month"
         
         return "\(monthName) \(year) Rewards"
+    }
+    
+    private var currentMonthIndicator: some View {
+        Group {
+            if year == Calendar.current.component(.year, from: Date()) && month == Calendar.current.component(.month, from: Date()) && !self.adminMode {
+                Text("Current")
+                    .font(.body)
+                    .padding(6) // Add padding around the text
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color.blue) // Background color of the rounded rectangle
+                    )
+                    .foregroundColor(.white) // Text color
+            }
+        }
     }
 }
 

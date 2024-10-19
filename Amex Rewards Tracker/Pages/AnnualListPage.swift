@@ -15,7 +15,7 @@ struct AnnualListPage: View {
     @State var month: Int = 0
     @State var year: Int = Calendar.current.component(.year, from: Date())
     
-    let buttonWidth: CGFloat = 180
+    let buttonWidth: CGFloat = 30
     
     let viewContext: NSManagedObjectContext
     let annual = true
@@ -29,6 +29,11 @@ struct AnnualListPage: View {
                         leading: getLeadingButton(),
                         trailing: getTrailingButton()
                     )
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            currentYearIndicator
+                        }
+                    }
             }
             Button(action: {
                 self.adminMode = !self.adminMode
@@ -46,36 +51,63 @@ struct AnnualListPage: View {
     }
     
     private func getLeadingButton() -> some View {
-        if(adminMode) {
-            return AnyView(EditButton())
-        }
-        else {
-            return AnyView(
-                Button("Last Year", action:  {
+        Group {
+            if adminMode {
+                EditButton()
+            }
+            else if year > 2020 {
+                Button(action:  {
                     year = year - 1
                 })
+                {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text(String(year - 1))
+                    }
+                }
                 .frame(width: buttonWidth, alignment: .leading)
-            )
+            }
         }
     }
     
     private func getTrailingButton() -> some View {
-        if(adminMode) {
-            return AnyView(NavigationLink("Add Annual Reward", destination: AddRewardPage(annual: annual, rewardType: "Annual")).isDetailLink(false))
-        }
-        else {
-            return AnyView(
-                Button("Next Year", action:  {
+        Group {
+            if adminMode {
+                NavigationLink("Add Annual Reward", destination: AddRewardPage(annual: annual, rewardType: "Annual")).isDetailLink(false)
+            }
+            else {
+                Button(action:  {
                     year = year + 1
                 })
+                {
+                    HStack {
+                        Text(String(year + 1))
+                        Image(systemName: "chevron.right")
+                    }
+                }
                 .frame(width: buttonWidth, alignment: .trailing)
-            )
+            }
+        }
+    }
+    
+    private var currentYearIndicator: some View {
+        Group {
+            if year == Calendar.current.component(.year, from: Date()) && !self.adminMode {
+                Text("Current")
+                    .font(.body)
+                    .padding(6) // Add padding around the text
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color.blue) // Background color of the rounded rectangle
+                    )
+                    .foregroundColor(.white) // Text color
+            }
         }
     }
 }
 
 struct AnnualListView_Previews: PreviewProvider {
     static var previews: some View {
-        Text("")//AnnualListView()
+        AnnualListPage(year: 2024, viewContext: PersistenceController.preview.container.viewContext)
     }
 }
