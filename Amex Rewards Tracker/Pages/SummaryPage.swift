@@ -24,17 +24,13 @@ struct SummaryPage: View {
             NavigationView {
                 List {
                     ProgressTileView(rewardType: "Total",
-                                     year: year,
-                                     barColor: Color.blue)
+                                     year: year)
                     ProgressTileView(rewardType: "Platinum",
-                                     year: year,
-                                     barColor: .gray)
+                                     year: year)
                     ProgressTileView(rewardType: "Gold",
-                                     year: year,
-                                     barColor: Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1)))
+                                     year: year)
                     ProgressTileView(rewardType: "Delta Reserve",
-                                     year: year,
-                                     barColor: Color(#colorLiteral(red: 0, green: 0, blue: 0.392, alpha: 1)))
+                                     year: year)
 
                 }
                 .navigationTitle("\(year) Rewards".replacingOccurrences(of: ",", with: ""))
