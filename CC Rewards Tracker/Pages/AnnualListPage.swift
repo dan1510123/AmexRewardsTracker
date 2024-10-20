@@ -1,6 +1,6 @@
 //
 //  AnnualListView.swift
-//  Amex Rewards Tracker
+//  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/13/21.
 //
@@ -81,7 +81,7 @@ struct AnnualListPage: View {
     private func getTrailingButton() -> some View {
         Group {
             if adminMode {
-                NavigationLink("Add Annual Reward", destination: AddRewardPage(annual: annual, rewardType: "Annual")).isDetailLink(false)
+                NavigationLink("Add Annual Reward", destination: AddRewardPage(recurrencePeriod: "Annual")).isDetailLink(false)
             }
             else {
                 Button(action:  {

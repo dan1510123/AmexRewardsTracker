@@ -1,6 +1,6 @@
 //
 //  ProgressBarWrapped.swift
-//  Amex Rewards Tracker
+//  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/27/21.
 //
