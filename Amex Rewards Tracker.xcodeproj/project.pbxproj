@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -43,6 +43,10 @@
 		09F6E4192674606500F37EC9 /* AddRewardPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRewardPage.swift; sourceTree = "<group>"; };
 		09F6E41B2674865500F37EC9 /* FullTabPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullTabPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		0943B0DA2CC47E0B00BEEC82 /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		09F6E3F826744B4900F37EC9 /* Frameworks */ = {
@@ -95,6 +99,7 @@
 		09F6E3FD26744B4900F37EC9 /* Amex Rewards Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				0943B0DA2CC47E0B00BEEC82 /* Extensions */,
 				09B100452777963100098488 /* Components */,
 				09B10044277795E000098488 /* Pages */,
 				09F6E4142674598800F37EC9 /* Views */,
@@ -140,6 +145,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				0943B0DA2CC47E0B00BEEC82 /* Extensions */,
 			);
 			name = "Amex Rewards Tracker";
 			productName = "Amex Rewards Tracker";

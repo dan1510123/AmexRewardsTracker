@@ -16,11 +16,10 @@ struct ProgressTileView: View {
     
     let rewardType: String
     let year: Int
-    let barColor: Color
     let saved: Int = 0
     let total: Int = 0
     
-    init(rewardType: String, year: Int, barColor: Color) {
+    init(rewardType: String, year: Int) {
         self.rewardType = rewardType
         self.year = year
         var predicate = NSPredicate(format: "year == \(year)")
@@ -31,12 +30,11 @@ struct ProgressTileView: View {
             sortDescriptors: [],
             predicate: predicate
         )
-        self.barColor = barColor
     }
     
     var body: some View {
         VStack(alignment: .leading) {
-            ProgressBarWrapped(rewards: self.rewards, rewardType: rewardType, barColor: barColor)
+            ProgressBarWrapped(rewards: self.rewards, rewardType: self.rewardType, barColor: getBarColor(cardType: self.rewardType))
             Spacer()
         }
         .padding()
@@ -50,6 +48,27 @@ struct ProgressTileView: View {
         }
     }
     
+    private func getBarColor(cardType: String) -> Color {
+        if (cardType == "Total") {
+            return Color.blue
+        }
+        else if (cardType == "Gold") {
+            return Color(#colorLiteral(red: 1, green: 0.8431372549, blue: 0, alpha: 1))
+        }
+        else if (cardType == "Platinum") {
+            return Color(#colorLiteral(red: 0.8980392157, green: 0.8941176471, blue: 0.968627451, alpha: 1))
+        }
+        else if (cardType == "Delta Gold") {
+            return Color(#colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1))
+        }
+        else if (cardType == "Delta Reserve") {
+            return Color(#colorLiteral(red: 0.6868614554, green: 0.403000772, blue: 1, alpha: 1))
+        }
+        else{
+            return Color(#colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
+        }
+    }
+    
     private func setTotal() {
         
     }
@@ -58,7 +77,7 @@ struct ProgressTileView: View {
 struct ProgressTileView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            ProgressTileView(rewardType: "Gold", year: 2021, barColor: Color.yellow)
+            ProgressTileView(rewardType: "Gold", year: 2021)
 //            ProgressTileView(rewardType: "Platinum", year: 2021)
 //            ProgressTileView(rewardType: "Total", year: 2021)
         }

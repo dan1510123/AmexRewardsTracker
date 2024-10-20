@@ -10,21 +10,23 @@ import CoreData
 
 struct MonthlyListPage: View {
     
-    @State var adminMode: Bool = false
     @State var month: Int = 1
     @State var year: Int = 1
+    
+    @Binding var adminMode: Bool
     
     let viewContext: NSManagedObjectContext
     let index: Int
     let annual = false
     
-    let buttonWidth: CGFloat = 180
+    let monthNames: [String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     
-    init(year: Int, month: Int, viewContext: NSManagedObjectContext) {
+    init(year: Int, month: Int, viewContext: NSManagedObjectContext, adminMode: Binding<Bool>) {
         self.year = year
         self.month = month
         self.index = year * 100 + month
         self.viewContext = viewContext
+        self._adminMode = adminMode
     }
     
     var body: some View {
@@ -37,40 +39,47 @@ struct MonthlyListPage: View {
                         leading: getLeadingButton(),
                         trailing: getTrailingButton()
                     )
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            currentMonthIndicator
+                        }
+                    }
             }
             
-            Button(action: {
-                withAnimation(.easeInOut(duration: 0.3)) {
+            if adminMode {
+                Button(action: {
                     self.adminMode.toggle()
+                }) {
+                    Text("LEAVE ADMIN MODE")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color(#colorLiteral(red: 0.9386306405, green: 0, blue: 0, alpha: 1)))
+                        .clipShape(Capsule())
                 }
-            }) {
-                Text("ADMIN MODE")
-                    .font(.system(size: 18, weight: .semibold)) // Updated font
-                    .foregroundColor(.white)
-                    .padding() // Added padding for a better touch area
-                    .frame(maxWidth: .infinity)
-                    .background(adminMode ? Color.blue : Color.gray) // Animated color change
-                    .clipShape(Capsule()) // Capsule shape for a softer look
+                .padding(.horizontal, 40)
+                .padding(.bottom, 10)
             }
-            .padding(.horizontal, 40) // Additional padding for spacing
-            .padding(.bottom, 10)
         }
         .background(Color(UIColor.systemBackground))
     }
     
     private func getLeadingButton() -> some View {
         Group {
-            if(adminMode) {
+            if adminMode {
                     EditButton()
-                        .frame(width: buttonWidth, alignment: .leading)
+                        .frame(alignment: .leading)
             } else {
-                Button(action:  {
-                    year = year + (Int)((month + 10) / 12 - 1)
-                    month = (month + 10) % 12 + 1
-                }) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text("Prev")
+                if month != 1 {
+                    Button(action:  {
+                        year = year + (Int)((month + 10) / 12 - 1)
+                        month = (month + 10) % 12 + 1
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text(monthNames[month - 2])
+                        }
                     }
                 }
             }
@@ -81,37 +90,50 @@ struct MonthlyListPage: View {
     
     private func getTrailingButton() -> some View {
         Group {
-            if(adminMode) {
+            if adminMode {
                 NavigationLink("Add Monthly Reward", destination: AddRewardPage(annual: annual, rewardType: "Monthly"))
-            } else {
+            } else if month != 12 {
                 Button(action:  {
                     year = year + (Int)(month / 12)
-                    month = month % 12 + 1
+                    month = month + 1
                 }){
                     HStack {
-                        Text("Next")
+                        Text(monthNames[month])
                         Image(systemName: "chevron.right")
                     }
                 }
             }
+            
         }
         .frame(maxWidth: .infinity, alignment: .trailing)
         .foregroundColor(.accentColor)
     }
     
     private func getMonthYearString() -> String {
-        // Define months array outside the string construction
-        let months: [String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-        
         // Use a separate variable to get the month name
-        let monthName = (month >= 1 && month <= 12) ? months[month - 1] : "Invalid Month"
+        let monthName = (month >= 1 && month <= 12) ? monthNames[month - 1] : "Invalid Month"
         
         return "\(monthName) \(year) Rewards"
+    }
+    
+    private var currentMonthIndicator: some View {
+        Group {
+            if year == Calendar.current.component(.year, from: Date()) && month == Calendar.current.component(.month, from: Date()) && !self.adminMode {
+                Text("Current")
+                    .font(.body)
+                    .padding(6) // Add padding around the text
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color.blue) // Background color of the rounded rectangle
+                    )
+                    .foregroundColor(.white) // Text color
+            }
+        }
     }
 }
 
 struct MonthlyListPage_Previews: PreviewProvider {
     static var previews: some View {
-        MonthlyListPage(year: 2024, month: 10, viewContext: PersistenceController.preview.container.viewContext)
+        Text("")//MonthlyListPage(year: 2024, month: 10, viewContext: PersistenceController.preview.container.viewContext)
     }
 }

@@ -10,15 +10,19 @@ import CoreData
 
 struct AnnualListPage: View {
     
+    @Binding var adminMode: Bool
+    
     @State var index: Int = Calendar.current.component(.year, from: Date())  * 100 + Calendar.current.component(.month, from: Date())
-    @State var adminMode: Bool = false
     @State var month: Int = 0
     @State var year: Int = Calendar.current.component(.year, from: Date())
     
-    let buttonWidth: CGFloat = 180
-    
     let viewContext: NSManagedObjectContext
     let annual = true
+    
+    init(viewContext: NSManagedObjectContext, adminMode: Binding<Bool>) {
+        self.viewContext = viewContext
+        self._adminMode = adminMode
+    }
     
     var body: some View {
         VStack(alignment: .center) {
@@ -29,53 +33,89 @@ struct AnnualListPage: View {
                         leading: getLeadingButton(),
                         trailing: getTrailingButton()
                     )
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            currentYearIndicator
+                        }
+                    }
             }
-            Button(action: {
-                self.adminMode = !self.adminMode
-            }) {
-                Text("ADMIN MODE")
-                    .font(.system(size: 20.0, design: .monospaced))
-                    .foregroundColor(.white)
+            if adminMode {
+                Button(action: {
+                    self.adminMode.toggle()
+                }) {
+                    Text("LEAVE ADMIN MODE")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color(#colorLiteral(red: 0.9386306405, green: 0, blue: 0, alpha: 1)))
+                        .clipShape(Capsule())
+                }
+                .padding(.horizontal, 40)
+                .padding(.bottom, 10)
             }
-            .frame(width: 160, height: 60)
-            .background(Color(#colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)))
-            .cornerRadius(50)
-            .padding(.bottom, 10)
         }
-        .background(Color(#colorLiteral(red: 0.9490196078, green: 0.9490196078, blue: 0.968627451, alpha: 1)))
+        .background(Color(UIColor.systemBackground))
     }
     
     private func getLeadingButton() -> some View {
-        if(adminMode) {
-            return AnyView(EditButton())
-        }
-        else {
-            return AnyView(
-                Button("Last Year", action:  {
+        Group {
+            if adminMode {
+                EditButton()
+            }
+            else if year > 2020 {
+                Button(action:  {
                     year = year - 1
                 })
-                .frame(width: buttonWidth, alignment: .leading)
-            )
+                {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text(String(year - 1))
+                    }
+                }
+                .frame(alignment: .leading)
+            }
         }
     }
     
     private func getTrailingButton() -> some View {
-        if(adminMode) {
-            return AnyView(NavigationLink("Add Annual Reward", destination: AddRewardPage(annual: annual, rewardType: "Annual")).isDetailLink(false))
-        }
-        else {
-            return AnyView(
-                Button("Next Year", action:  {
+        Group {
+            if adminMode {
+                NavigationLink("Add Annual Reward", destination: AddRewardPage(annual: annual, rewardType: "Annual")).isDetailLink(false)
+            }
+            else {
+                Button(action:  {
                     year = year + 1
                 })
-                .frame(width: buttonWidth, alignment: .trailing)
-            )
+                {
+                    HStack {
+                        Text(String(year + 1))
+                        Image(systemName: "chevron.right")
+                    }
+                }
+                .frame(alignment: .trailing)
+            }
+        }
+    }
+    
+    private var currentYearIndicator: some View {
+        Group {
+            if year == Calendar.current.component(.year, from: Date()) && !self.adminMode {
+                Text("Current")
+                    .font(.body)
+                    .padding(6)
+                    .background(
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color.blue)
+                    )
+                    .foregroundColor(.white)
+            }
         }
     }
 }
 
 struct AnnualListView_Previews: PreviewProvider {
     static var previews: some View {
-        Text("")//AnnualListView()
+        Text("")//AnnualListPage(year: 2024, viewContext: PersistenceController.preview.container.viewContext)
     }
 }
