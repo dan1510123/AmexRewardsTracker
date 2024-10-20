@@ -14,7 +14,7 @@ struct ListView: View {
     var adminMode: Binding<Bool>
     
     let index: Int
-    let annual: Bool
+    let recurrencePeriod: String
     let month: Int
     let year: Int
     
@@ -22,19 +22,20 @@ struct ListView: View {
     var fetchRequest: FetchRequest<Reward>
     var rewards: FetchedResults<Reward> { fetchRequest.wrappedValue }
     
-    init(index: Int, annual: Bool, month: Binding<Int>, year: Binding<Int>, adminMode: Binding<Bool>, viewContext: NSManagedObjectContext) {
+    init(index: Int, recurrencePeriod: String, month: Binding<Int>, year: Binding<Int>, adminMode: Binding<Bool>, viewContext: NSManagedObjectContext) {
         fetchRequest = FetchRequest<Reward>(entity: Reward.entity(),
             sortDescriptors: [
                 NSSortDescriptor(keyPath: \Reward.redeemed, ascending: true),
+                NSSortDescriptor(keyPath: \Reward.expirationDate, ascending: true),
                 NSSortDescriptor(keyPath: \Reward.value, ascending: false),
                 NSSortDescriptor(keyPath: \Reward.title, ascending: true)
             ],
             
-            predicate: NSPredicate(format: "annual == \(annual) and month == \(month.wrappedValue) and year == \(year.wrappedValue)")
+            predicate: NSPredicate(format: "recurrencePeriod == \"\(recurrencePeriod)\" and month == \(month.wrappedValue) and year == \(year.wrappedValue)")
         )
         
         self.index = index
-        self.annual = annual
+        self.recurrencePeriod = recurrencePeriod
         self.month = month.wrappedValue
         self.year = year.wrappedValue
         self.adminMode = adminMode
@@ -42,10 +43,19 @@ struct ListView: View {
     }
     
     var body: some View {
-        List {
-            ForEach(fetchRequest.wrappedValue) { reward in
-                ListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
-            }.onDelete(perform: deleteTasks)
+        if adminMode.wrappedValue {
+            List {
+                ForEach(fetchRequest.wrappedValue) { reward in
+                    ListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
+                }
+                .onDelete(perform: deleteTasks)
+            }
+        } else {
+            List {
+                ForEach(fetchRequest.wrappedValue) { reward in
+                    ListRowView(reward: reward, title: reward.title ?? "Untitled", details: reward.details ?? "", value: reward.value, redeemed: reward.redeemed)
+                }
+            }
         }
     }
     
@@ -66,7 +76,7 @@ struct ListView: View {
                     let titleToDelete: String = rewardToDelete.title ?? ""
                     let requestFullYear = NSFetchRequest<Reward>()
                     requestFullYear.entity = Reward.entity()
-                    requestFullYear.predicate = NSPredicate(format: "annual == \(annual) and title == \"\(titleToDelete)\" and year == \(year)")
+                    requestFullYear.predicate = NSPredicate(format: "recurrencePeriod == \"\(recurrencePeriod)\" and title == \"\(titleToDelete)\" and year == \(year)")
                     do {
                         let rewardsToDelete: [Reward] = try viewContext.fetch(requestFullYear)
                         rewardsToDelete.forEach(viewContext.delete)

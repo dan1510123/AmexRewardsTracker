@@ -55,7 +55,7 @@ struct FullTabPage: View {
                         }
                     }
                 
-                Text("Placeholder")
+                LazyView(LimitedTimeListPage(viewContext: viewContext, adminMode: $adminMode)) 
                     .tabItem {
                         VStack {
                             Image(systemName: "clock.arrow.circlepath")

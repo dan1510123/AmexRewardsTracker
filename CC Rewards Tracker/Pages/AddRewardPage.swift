@@ -48,14 +48,14 @@ struct AddRewardPage: View {
                     .background(Color(#colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)))
                     .cornerRadius(10)
                 
-                if(self.recurrencePeriod == "Annual" || self.recurrencePeriod == "Monthly") {
+                if(self.recurrencePeriod == "year" || self.recurrencePeriod == "month") {
                     Picker("Year", selection: $selectedYear) {
                         ForEach([2022, 2023, 2024], id: \.self) {
                             Text(String($0))
                         }
                     }
                 }
-                else if recurrencePeriod == "One-Time"  {
+                else if recurrencePeriod == "once"  {
                     Button(action: {
                         isDatePickerPresented.toggle()
                     }) {
@@ -114,12 +114,13 @@ struct AddRewardPage: View {
     }
     
     private func onSavePressed() {
-        if recurrencePeriod == "Annual" {
+        if recurrencePeriod == "year" {
             let newReward: Reward = createReward()
             newReward.recurrencePeriod = "year"
             newReward.expirationDate = getLastDayOfMonth(year: selectedYear, month: 12)
+            newReward.month = -1
         }
-        else if recurrencePeriod == "Monthly" {
+        else if recurrencePeriod == "month" {
             for month in 1...12 {
                 let newReward: Reward = createReward()
                 newReward.recurrencePeriod = "month"
@@ -127,10 +128,12 @@ struct AddRewardPage: View {
                 newReward.expirationDate = getLastDayOfMonth(year: selectedYear, month: month)
             }
         }
-        else if recurrencePeriod == "One-Time" {
+        else if recurrencePeriod == "once" {
             let newReward: Reward = createReward()
             newReward.recurrencePeriod = "once"
             newReward.expirationDate = selectedDate
+            newReward.year = -1
+            newReward.month = -1
         }
         
         saveContext()
