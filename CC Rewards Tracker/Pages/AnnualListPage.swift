@@ -50,6 +50,7 @@ struct AnnualListPage: View {
                         .frame(maxWidth: .infinity)
                         .background(Color(#colorLiteral(red: 0.9386306405, green: 0, blue: 0, alpha: 1)))
                         .clipShape(Capsule())
+                        .background(Color(UIColor.systemBackground))
                 }
                 .padding(.horizontal, 40)
                 .padding(.bottom, 10)

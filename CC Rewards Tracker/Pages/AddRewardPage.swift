@@ -132,7 +132,7 @@ struct AddRewardPage: View {
             let newReward: Reward = createReward()
             newReward.recurrencePeriod = "once"
             newReward.expirationDate = selectedDate
-            newReward.year = -1
+            newReward.year = Int16(Calendar.current.component(.year, from: Date()))
             newReward.month = -1
         }
         

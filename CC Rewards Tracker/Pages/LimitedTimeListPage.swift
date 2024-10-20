@@ -14,7 +14,7 @@ struct LimitedTimeListPage: View {
     
     @State var index: Int = Calendar.current.component(.year, from: Date()) * 10000 + Calendar.current.component(.month, from: Date()) * 100 + Calendar.current.component(.day, from: Date())
     
-    @State var year: Int = -1
+    @State var year: Int = Calendar.current.component(.year, from: Date())
     @State var month: Int = -1
     
     let viewContext: NSManagedObjectContext

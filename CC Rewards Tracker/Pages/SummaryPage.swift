@@ -34,7 +34,7 @@ struct SummaryPage: View {
                                      year: year)
                     
                 }
-                .navigationTitle("\(year) Rewards".replacingOccurrences(of: ",", with: ""))
+                .navigationTitle("\(year) Rewards Summary".replacingOccurrences(of: ",", with: ""))
                 .navigationBarItems(
                     leading: getLeadingButton(),
                     trailing: getTrailingButton()
