@@ -69,24 +69,6 @@ struct ProgressTileView: View {
         }
     }
     
-    private func getCardIcon(cardType: String) -> Image {
-        if (cardType == "Gold") {
-            return Image("goldCardIcon")
-        }
-        else if (cardType == "Platinum") {
-            return Image("platCardIcon")
-        }
-        else if (cardType == "Delta Gold") {
-            return Image("deltaGoldCardIcon")
-        }
-        else if (cardType == "Delta Reserve") {
-            return Image("deltaReserveCardIcon")
-        }
-        else{
-            return Image("")
-        }
-    }
-    
     private func setTotal() {
         
     }

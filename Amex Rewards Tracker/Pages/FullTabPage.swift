@@ -10,6 +10,9 @@ import SwiftUI
 struct FullTabPage: View {
     @Environment(\.managedObjectContext) private var viewContext
     
+    @State private var showAdminAlert: Bool = false
+    @State private var adminMode: Bool = false
+    
     let currentYear: Int = Calendar.current.component(.year, from: Date())
     let currentMonth: Int = Calendar.current.component(.month, from: Date())
     
@@ -24,7 +27,7 @@ struct FullTabPage: View {
                 .edgesIgnoringSafeArea(.all)
             
             TabView {
-                SummaryPage(viewContext: viewContext)
+                SummaryPage(viewContext: viewContext, adminMode: $adminMode)
                     .tabItem {
                         VStack {
                             Image(systemName: "list.bullet.rectangle")
@@ -33,7 +36,7 @@ struct FullTabPage: View {
                         }
                     }
                 
-                AnnualListPage(viewContext: viewContext)
+                AnnualListPage(viewContext: viewContext, adminMode: $adminMode)
                     .tabItem {
                         VStack {
                             Image(systemName: "calendar.circle")
@@ -42,7 +45,7 @@ struct FullTabPage: View {
                         }
                     }
                 
-                MonthlyListPage(year: currentYear, month: currentMonth, viewContext: viewContext)
+                MonthlyListPage(year: currentYear, month: currentMonth, viewContext: viewContext, adminMode: $adminMode)
                     .tabItem {
                         VStack {
                             Image(systemName: "calendar")
@@ -51,7 +54,7 @@ struct FullTabPage: View {
                         }
                     }
                 
-                MonthlyListPage(year: currentYear, month: currentMonth, viewContext: viewContext)
+                MonthlyListPage(year: currentYear, month: currentMonth, viewContext: viewContext, adminMode: $adminMode)
                     .tabItem {
                         VStack {
                             Image(systemName: "clock.arrow.circlepath")
@@ -66,6 +69,30 @@ struct FullTabPage: View {
                 UITabBar.appearance().isTranslucent = true
                 UITabBar.appearance().shadowImage = UIImage()
                 UITabBar.appearance().backgroundImage = UIImage()
+            }
+        }
+        .alert(isPresented: $showAdminAlert) {
+            Alert(
+                title: Text("Admin Mode"),
+                message: Text("Would you like to switch to Admin Mode?"),
+                primaryButton: .default(Text("Yes")) {
+                    adminMode = true
+                    showAdminAlert = false
+                },
+                secondaryButton: .cancel(Text("No")) {
+                    adminMode = false
+                    showAdminAlert = false
+                }
+            )
+        }
+        .onAppear {
+            // Register for shake motion notifications
+            NotificationCenter.default.addObserver(
+                forName: .deviceDidShakeNotification,
+                object: nil,
+                queue: .main
+            ) { _ in
+                showAdminAlert = true
             }
         }
     }

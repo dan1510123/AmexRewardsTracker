@@ -10,23 +10,23 @@ import CoreData
 
 struct MonthlyListPage: View {
     
-    @State var adminMode: Bool = false
     @State var month: Int = 1
     @State var year: Int = 1
+    
+    @Binding var adminMode: Bool
     
     let viewContext: NSManagedObjectContext
     let index: Int
     let annual = false
     
-    let buttonWidth: CGFloat = 30
-    
     let monthNames: [String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     
-    init(year: Int, month: Int, viewContext: NSManagedObjectContext) {
+    init(year: Int, month: Int, viewContext: NSManagedObjectContext, adminMode: Binding<Bool>) {
         self.year = year
         self.month = month
         self.index = year * 100 + month
         self.viewContext = viewContext
+        self._adminMode = adminMode
     }
     
     var body: some View {
@@ -46,21 +46,21 @@ struct MonthlyListPage: View {
                     }
             }
             
-            Button(action: {
-                withAnimation(.easeInOut(duration: 0.3)) {
+            if adminMode {
+                Button(action: {
                     self.adminMode.toggle()
+                }) {
+                    Text("LEAVE ADMIN MODE")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color(#colorLiteral(red: 0.9386306405, green: 0, blue: 0, alpha: 1)))
+                        .clipShape(Capsule())
                 }
-            }) {
-                Text("ADMIN MODE")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(adminMode ? Color.blue : Color.gray)
-                    .clipShape(Capsule())
+                .padding(.horizontal, 40)
+                .padding(.bottom, 10)
             }
-            .padding(.horizontal, 40)
-            .padding(.bottom, 10)
         }
         .background(Color(UIColor.systemBackground))
     }
@@ -69,7 +69,7 @@ struct MonthlyListPage: View {
         Group {
             if adminMode {
                     EditButton()
-                        .frame(width: buttonWidth, alignment: .leading)
+                        .frame(alignment: .leading)
             } else {
                 if month != 1 {
                     Button(action:  {
@@ -134,6 +134,6 @@ struct MonthlyListPage: View {
 
 struct MonthlyListPage_Previews: PreviewProvider {
     static var previews: some View {
-        MonthlyListPage(year: 2024, month: 10, viewContext: PersistenceController.preview.container.viewContext)
+        Text("")//MonthlyListPage(year: 2024, month: 10, viewContext: PersistenceController.preview.container.viewContext)
     }
 }
