@@ -14,7 +14,7 @@ struct CC_Rewards_TrackerApp: App {
     
     var body: some Scene {
         WindowGroup {
-            FullTabPage()
+            FullTabView()
                 .environment(\.managedObjectContext, persistenceContainer.container.viewContext)
         }
     }

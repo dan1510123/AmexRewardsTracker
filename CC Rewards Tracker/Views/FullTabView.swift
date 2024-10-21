@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FullTabPage: View {
+struct FullTabView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @State private var isDeviceShaken: Bool = false
@@ -113,6 +113,6 @@ struct FullTabPage: View {
     
 struct FullTabView_Previews: PreviewProvider {
     static var previews: some View {
-        FullTabPage()
+        FullTabView()
     }
 }
