@@ -1,6 +1,6 @@
 //
 //  TabView.swift
-//  Amex Rewards Tracker
+//  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/11/21.
 //
@@ -55,7 +55,7 @@ struct FullTabPage: View {
                         }
                     }
                 
-                Text("Placeholder")
+                LazyView(LimitedTimeListPage(viewContext: viewContext, adminMode: $adminMode))
                     .tabItem {
                         VStack {
                             Image(systemName: "clock.arrow.circlepath")

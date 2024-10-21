@@ -10,6 +10,7 @@
 		090531F42676C6D9008211B3 /* AnnualListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090531F32676C6D9008211B3 /* AnnualListPage.swift */; };
 		0909BAD12CC4985B00484517 /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0909BAD02CC4985900484517 /* LazyView.swift */; };
 		0927702E2CC5645600EF949F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0927702C2CC5645600EF949F /* Extensions.swift */; };
+		092770302CC57A1B00EF949F /* LimitedTimeListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0927702F2CC57A1B00EF949F /* LimitedTimeListPage.swift */; };
 		098A71CC26897E4B00DE0134 /* ProgressBarWrapped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098A71CB26897E4B00DE0134 /* ProgressBarWrapped.swift */; };
 		09C2EE9F26751836009D992B /* MonthlyListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2EE9E26751836009D992B /* MonthlyListPage.swift */; };
 		09DB186826785F13002203D1 /* SummaryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DB186726785F13002203D1 /* SummaryPage.swift */; };
@@ -30,6 +31,7 @@
 		090531F32676C6D9008211B3 /* AnnualListPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnualListPage.swift; sourceTree = "<group>"; };
 		0909BAD02CC4985900484517 /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyView.swift; sourceTree = "<group>"; };
 		0927702C2CC5645600EF949F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		0927702F2CC57A1B00EF949F /* LimitedTimeListPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedTimeListPage.swift; sourceTree = "<group>"; };
 		098A71CB26897E4B00DE0134 /* ProgressBarWrapped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarWrapped.swift; sourceTree = "<group>"; };
 		09C2EE9E26751836009D992B /* MonthlyListPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyListPage.swift; sourceTree = "<group>"; };
 		09DB186726785F13002203D1 /* SummaryPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryPage.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				09C2EE9E26751836009D992B /* MonthlyListPage.swift */,
 				09F6E41B2674865500F37EC9 /* FullTabPage.swift */,
 				090531F32676C6D9008211B3 /* AnnualListPage.swift */,
+				0927702F2CC57A1B00EF949F /* LimitedTimeListPage.swift */,
 				09F6E4192674606500F37EC9 /* AddRewardPage.swift */,
 				09DB186726785F13002203D1 /* SummaryPage.swift */,
 			);
@@ -221,6 +224,7 @@
 				09F6E41C2674865500F37EC9 /* FullTabPage.swift in Sources */,
 				09F6E3FF26744B4900F37EC9 /* CC_Rewards_TrackerApp.swift in Sources */,
 				0927702E2CC5645600EF949F /* Extensions.swift in Sources */,
+				092770302CC57A1B00EF949F /* LimitedTimeListPage.swift in Sources */,
 				09DB186826785F13002203D1 /* SummaryPage.swift in Sources */,
 				09C2EE9F26751836009D992B /* MonthlyListPage.swift in Sources */,
 				09F6E40F26744C4200F37EC9 /* Rewards.xcdatamodeld in Sources */,

@@ -1,6 +1,6 @@
 //
 //  MRListPagesView.swift
-//  Amex Rewards Tracker
+//  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/12/21.
 //
@@ -17,7 +17,7 @@ struct MonthlyListPage: View {
     
     let viewContext: NSManagedObjectContext
     let index: Int
-    let annual = false
+    let recurrencePeriod: String = "month"
     
     let monthNames: [String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     
@@ -32,7 +32,7 @@ struct MonthlyListPage: View {
     var body: some View {
         VStack(alignment: .center) {
             NavigationView {
-                ListView(index: index, annual: annual, month: $month, year: $year, adminMode: $adminMode, viewContext: viewContext)
+                ListView(index: index, recurrencePeriod: recurrencePeriod, month: $month, year: $year, adminMode: $adminMode, viewContext: viewContext)
                     .navigationTitle(getMonthYearString())
                     .foregroundColor(.primary)
                     .navigationBarItems(
@@ -91,7 +91,7 @@ struct MonthlyListPage: View {
     private func getTrailingButton() -> some View {
         Group {
             if adminMode {
-                NavigationLink("Add Monthly Reward", destination: AddRewardPage(annual: annual, rewardType: "Monthly"))
+                NavigationLink("Add Monthly Reward", destination: AddRewardPage(recurrencePeriod: recurrencePeriod))
             } else if month != 12 {
                 Button(action:  {
                     year = year + (Int)(month / 12)

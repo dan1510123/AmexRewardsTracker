@@ -1,6 +1,6 @@
 //
 //  AddMRView.swift
-//  Amex Rewards Tracker
+//  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/11/21.
 //
@@ -11,9 +11,12 @@ struct AddRewardPage: View {
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
     
+    @State private var isDatePickerPresented: Bool = false
+    @State private var selectedDate: Date? = nil
+    
     @State var titleFieldText: String = ""
     @State var detailsFieldText: String = ""
-    @State var yearNumber: String = "2024"
+    @State var selectedYear: Int = 2024
     @State var cardType: String = "Gold"
     @State var valueFieldText: String = ""
     
@@ -23,12 +26,11 @@ struct AddRewardPage: View {
             return formatter
         }()
     
-    let annual: Bool
-    let rewardType: String
+    let recurrencePeriod: String
     
     var body: some View {
         ScrollView {
-            Text("Add \(rewardType) Reward ⭐️")
+            Text("Add \(recurrencePeriod) Reward ⭐️")
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                 .frame(maxWidth: 200, maxHeight: 50)
@@ -46,9 +48,39 @@ struct AddRewardPage: View {
                     .background(Color(#colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)))
                     .cornerRadius(10)
                 
-                Picker("Year", selection: $yearNumber) {
-                    ForEach(["2022", "2023", "2024"], id: \.self) {
-                        Text($0)
+                if(self.recurrencePeriod == "year" || self.recurrencePeriod == "month") {
+                    Picker("Year", selection: $selectedYear) {
+                        ForEach([2022, 2023, 2024], id: \.self) {
+                            Text(String($0))
+                        }
+                    }
+                }
+                else if recurrencePeriod == "once"  {
+                    Button(action: {
+                        isDatePickerPresented.toggle()
+                    }) {
+                        Text(selectedDate != nil ? formattedDate(selectedDate!) : "Select a Date")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                    }
+                    .sheet(isPresented: $isDatePickerPresented) {
+                        // DatePicker in a sheet
+                        VStack {
+                            DatePicker("Select a date", selection: Binding(
+                                get: { selectedDate ?? Date() },
+                                set: { selectedDate = $0 }
+                            ), displayedComponents: [.date])
+                            .datePickerStyle(GraphicalDatePickerStyle())
+                            .padding()
+                            
+                            Button("Done") {
+                                isDatePickerPresented = false
+                            }
+                            .padding()
+                        }
+                        .padding()
                     }
                 }
                 
@@ -58,7 +90,7 @@ struct AddRewardPage: View {
                     }
                 }
 
-                TextField("Reward \(rewardType) Value", text: $valueFieldText)
+                TextField("Reward \(recurrencePeriod) Value", text: $valueFieldText)
                     .keyboardType(.numberPad)
                     .padding(.horizontal)
                     .frame(height: 55)
@@ -82,17 +114,26 @@ struct AddRewardPage: View {
     }
     
     private func onSavePressed() {
-        if(annual) {
+        if recurrencePeriod == "year" {
             let newReward: Reward = createReward()
-            newReward.annual = true
-            newReward.month = 0
+            newReward.recurrencePeriod = "year"
+            newReward.expirationDate = getLastDayOfMonth(year: selectedYear, month: 12)
+            newReward.month = -1
         }
-        else {
+        else if recurrencePeriod == "month" {
             for month in 1...12 {
                 let newReward: Reward = createReward()
-                newReward.annual = false
+                newReward.recurrencePeriod = "month"
                 newReward.month = Int16(month)
+                newReward.expirationDate = getLastDayOfMonth(year: selectedYear, month: month)
             }
+        }
+        else if recurrencePeriod == "once" {
+            let newReward: Reward = createReward()
+            newReward.recurrencePeriod = "once"
+            newReward.expirationDate = selectedDate
+            newReward.year = Int16(Calendar.current.component(.year, from: Date()))
+            newReward.month = -1
         }
         
         saveContext()
@@ -103,8 +144,8 @@ struct AddRewardPage: View {
         let newReward = Reward(context: viewContext)
         newReward.title = titleFieldText
         newReward.details = detailsFieldText
-        newReward.value = Float(valueFieldText) ?? 0
-        newReward.year = Int16(yearNumber) ?? 0
+        newReward.value = Float(valueFieldText) ?? -1
+        newReward.year = Int16(selectedYear)
         newReward.cardType = cardType
         newReward.redeemed = false
         
@@ -119,12 +160,35 @@ struct AddRewardPage: View {
             fatalError("Unresolved error: \(error)")
         }
     }
+    
+    private func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter.string(from: date)
+    }
+    
+    private func getLastDayOfMonth(year: Int, month: Int) -> Date? {
+        var components = DateComponents()
+        components.year = year
+        components.month = month
+
+        // Get the range of days in the specified month
+        let range = Calendar.current.range(of: .day, in: .month, for: Calendar.current.date(from: components)!)
+        
+        // The last day of the month is the last element in the range
+        guard let lastDay = range?.count else { return nil }
+        
+        // Create the date for the last day of the month
+        components.day = lastDay
+        return Calendar.current.date(from: components)
+    }
 }
 
 struct AddRewardView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            AddRewardPage(annual: true, rewardType: "Monthly")
+            AddRewardPage(recurrencePeriod: "One-Time")
         }
     }
 }

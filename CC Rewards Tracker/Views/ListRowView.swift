@@ -1,6 +1,6 @@
 //
 //  MRListRowView.swift
-//  Amex Rewards Tracker
+//  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/11/21.
 //
@@ -31,10 +31,16 @@ struct ListRowView: View {
                     Text("\(String(format: "$%.2f", value))")
                         .font(.subheadline)
                 }
-                
-                Text(details)
-                    .font(.subheadline)
-                    .lineLimit(2)
+                HStack {
+                    Text(details)
+                        .font(.subheadline)
+                        .lineLimit(2)
+                    Spacer()
+                    if reward.recurrencePeriod == "once" {
+                        Text("Expires " + formatDateToString(date: reward.expirationDate!, format: "MM/dd"))
+                            .font(.subheadline)
+                    }
+                }
             }
             
             Button(action: {
@@ -94,6 +100,12 @@ struct ListRowView: View {
         else{
             return Color(#colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
         }
+    }
+    
+    func formatDateToString(date: Date, format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: date)
     }
 
     private func onCheckPressed() {

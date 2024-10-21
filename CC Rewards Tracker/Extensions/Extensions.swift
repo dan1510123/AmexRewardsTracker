@@ -1,6 +1,6 @@
 //
 //  Extensions.swift
-//  Amex Rewards Tracker
+//  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 10/19/24.
 //

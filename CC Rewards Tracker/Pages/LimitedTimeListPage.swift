@@ -8,16 +8,17 @@
 import SwiftUI
 import CoreData
 
-struct AnnualListPage: View {
+struct LimitedTimeListPage: View {
     
     @Binding var adminMode: Bool
     
-    @State var index: Int = Calendar.current.component(.year, from: Date())  * 100 + Calendar.current.component(.month, from: Date())
+    @State var index: Int = Calendar.current.component(.year, from: Date()) * 10000 + Calendar.current.component(.month, from: Date()) * 100 + Calendar.current.component(.day, from: Date())
+    
     @State var year: Int = Calendar.current.component(.year, from: Date())
     @State var month: Int = -1
     
     let viewContext: NSManagedObjectContext
-    let recurrencePeriod: String = "year"
+    let recurrencePeriod: String = "once"
     
     init(viewContext: NSManagedObjectContext, adminMode: Binding<Bool>) {
         self.viewContext = viewContext
@@ -28,16 +29,11 @@ struct AnnualListPage: View {
         VStack(alignment: .center) {
             NavigationView {
                 ListView(index: index, recurrencePeriod: recurrencePeriod, month: $month, year: $year, adminMode: $adminMode, viewContext: viewContext)
-                    .navigationTitle("\(year) Annual Rewards".replacingOccurrences(of: ",", with: ""))
+                    .navigationTitle("One-Time Rewards".replacingOccurrences(of: ",", with: ""))
                     .navigationBarItems(
                         leading: getLeadingButton(),
                         trailing: getTrailingButton()
                     )
-                    .toolbar {
-                        ToolbarItem(placement: .principal) {
-                            currentYearIndicator
-                        }
-                    }
             }
             if adminMode {
                 Button(action: {
@@ -50,7 +46,6 @@ struct AnnualListPage: View {
                         .frame(maxWidth: .infinity)
                         .background(Color(#colorLiteral(red: 0.9386306405, green: 0, blue: 0, alpha: 1)))
                         .clipShape(Capsule())
-                        .background(Color(UIColor.systemBackground))
                 }
                 .padding(.horizontal, 40)
                 .padding(.bottom, 10)
@@ -64,58 +59,19 @@ struct AnnualListPage: View {
             if adminMode {
                 EditButton()
             }
-            else if year > 2020 {
-                Button(action:  {
-                    year = year - 1
-                })
-                {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text(String(year - 1))
-                    }
-                }
-                .frame(alignment: .leading)
-            }
         }
     }
     
     private func getTrailingButton() -> some View {
         Group {
             if adminMode {
-                NavigationLink("Add Annual Reward", destination: AddRewardPage(recurrencePeriod: recurrencePeriod)).isDetailLink(false)
-            }
-            else {
-                Button(action:  {
-                    year = year + 1
-                })
-                {
-                    HStack {
-                        Text(String(year + 1))
-                        Image(systemName: "chevron.right")
-                    }
-                }
-                .frame(alignment: .trailing)
-            }
-        }
-    }
-    
-    private var currentYearIndicator: some View {
-        Group {
-            if year == Calendar.current.component(.year, from: Date()) && !self.adminMode {
-                Text("Current")
-                    .font(.body)
-                    .padding(6)
-                    .background(
-                        RoundedRectangle(cornerRadius: 15)
-                            .fill(Color.blue)
-                    )
-                    .foregroundColor(.white)
+                NavigationLink("Add One-Time Reward", destination: AddRewardPage(recurrencePeriod: recurrencePeriod)).isDetailLink(false)
             }
         }
     }
 }
 
-struct AnnualListView_Previews: PreviewProvider {
+struct LimitedTimeListView_Previews: PreviewProvider {
     static var previews: some View {
         Text("")//AnnualListPage(year: 2024, viewContext: PersistenceController.preview.container.viewContext)
     }

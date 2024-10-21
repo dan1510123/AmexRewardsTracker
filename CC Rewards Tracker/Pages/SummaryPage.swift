@@ -1,6 +1,6 @@
 //
 //  SummaryView.swift
-//  Amex Rewards Tracker
+//  Credit Card Rewards Tracker
 //
 //  Created by Daniel Luo on 6/14/21.
 //
@@ -34,7 +34,7 @@ struct SummaryPage: View {
                                      year: year)
                     
                 }
-                .navigationTitle("\(year) Rewards".replacingOccurrences(of: ",", with: ""))
+                .navigationTitle("\(year) Rewards Summary".replacingOccurrences(of: ",", with: ""))
                 .navigationBarItems(
                     leading: getLeadingButton(),
                     trailing: getTrailingButton()
