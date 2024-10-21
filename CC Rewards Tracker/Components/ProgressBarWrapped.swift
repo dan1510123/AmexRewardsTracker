@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ProgressBarWrapped: View {
     
+    var annualFee: Float
+    var goalPercent: Float = 0
+    
     let rewards: FetchedResults<Reward>
     let rewardType: String
     let barColor: Color
@@ -16,7 +19,8 @@ struct ProgressBarWrapped: View {
     var total: Float = 0
     var progressPercent: Float = 0
     
-    init(rewards: FetchedResults<Reward>, rewardType: String, barColor: Color) {
+    init(annualFee: Float, rewards: FetchedResults<Reward>, rewardType: String, barColor: Color) {
+        self.annualFee = annualFee
         self.rewards = rewards
         self.rewardType = rewardType
         self.barColor = barColor
@@ -32,6 +36,10 @@ struct ProgressBarWrapped: View {
         }
         if self.total > 0 {
             self.progressPercent = self.redeemed / self.total
+            self.goalPercent = self.annualFee / self.total
+        }
+        if self.goalPercent > 1 || self.total == 0 {
+            self.goalPercent = 1
         }
     }
     
@@ -50,7 +58,7 @@ struct ProgressBarWrapped: View {
             }
             Text("\(String(format: "$%.0f", self.redeemed)) of \(String(format: "$%.0f", self.total)) earned")
                 .font(.system(size: 20.0))
-            ProgressBar(value: progressPercent, color: barColor).frame(height: 20)
+            ProgressBar(progressPercent: self.progressPercent, goalPercent: self.goalPercent, color: self.barColor).frame(height: 20)
         }
     }
     

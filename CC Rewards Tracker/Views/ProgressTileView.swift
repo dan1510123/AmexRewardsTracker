@@ -14,12 +14,15 @@ struct ProgressTileView: View {
     var fetchRequest: FetchRequest<Reward>
     var rewards: FetchedResults<Reward> { fetchRequest.wrappedValue }
     
+    let annualFee: Float
+    
     let rewardType: String
     let year: Int
     let saved: Int = 0
     let total: Int = 0
     
-    init(rewardType: String, year: Int) {
+    init(annualFee: Float, rewardType: String, year: Int) {
+        self.annualFee = annualFee
         self.rewardType = rewardType
         self.year = year
         var predicate = NSPredicate(format: "year == \(year)")
@@ -34,7 +37,7 @@ struct ProgressTileView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            ProgressBarWrapped(rewards: self.rewards, rewardType: self.rewardType, barColor: getBarColor(cardType: self.rewardType))
+            ProgressBarWrapped(annualFee: self.annualFee, rewards: self.rewards, rewardType: self.rewardType, barColor: getBarColor(cardType: self.rewardType))
             Spacer()
         }
         .padding()
@@ -77,9 +80,9 @@ struct ProgressTileView: View {
 struct ProgressTileView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            ProgressTileView(rewardType: "Gold", year: 2021)
-//            ProgressTileView(rewardType: "Platinum", year: 2021)
-//            ProgressTileView(rewardType: "Total", year: 2021)
+            ProgressTileView(annualFee: 350, rewardType: "Gold", year: 2021)
+            ProgressTileView(annualFee: 695, rewardType: "Platinum", year: 2021)
+            ProgressTileView(annualFee: 1045, rewardType: "Total", year: 2021)
         }
     }
 }

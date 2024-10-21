@@ -26,13 +26,15 @@ struct SummaryPage: View {
         VStack {
             NavigationView {
                 List {
-                    ProgressTileView(rewardType: "Total",
+                    ProgressTileView(annualFee: 1820, rewardType: "Total",
                                      year: year)
-                    ProgressTileView(rewardType: "Platinum",
+                    ProgressTileView(annualFee: 695, rewardType: "Platinum",
                                      year: year)
-                    ProgressTileView(rewardType: "Gold",
+                    ProgressTileView(annualFee: 325, rewardType: "Gold",
                                      year: year)
-                    ProgressTileView(rewardType: "Delta Reserve",
+                    ProgressTileView(annualFee: 650, rewardType: "Delta Reserve",
+                                     year: year)
+                    ProgressTileView(annualFee: 150, rewardType: "Delta Gold",
                                      year: year)
                     
                 }
@@ -110,6 +112,6 @@ struct SummaryPage: View {
 
 struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
-        Text("")//SummaryView()
+        Text("") // SummaryView()
     }
 }
