@@ -12,6 +12,8 @@ struct SummaryPage: View {
     
     @Binding var adminMode: Bool
     
+    @State var isSettingsPresented:Bool = false
+    
     let viewContext: NSManagedObjectContext
     @State var year: Int = Calendar.current.component(.year, from: Date())
     
@@ -58,32 +60,51 @@ struct SummaryPage: View {
                 .padding(.bottom, 10)
             }
         }
+        .sheet(isPresented: $isSettingsPresented) {
+            SettingsView(isSettingsPresented: $isSettingsPresented)
+        }
     }
     
     private func getLeadingButton() -> some View {
-        Button(action:  {
-            year = year - 1
-        })
-        {
-            HStack {
-                Image(systemName: "chevron.left")
-                Text(String(year - 1) + " Summary")
+        Group {
+            if adminMode {
+                Button(action: {
+                    isSettingsPresented = true
+                })
+                {
+                    HStack {
+                        Image(systemName: "gearshape.fill")
+                        Text("Settings")
+                    }
+                }
+            } else {
+                Button(action:  {
+                    year = year - 1
+                })
+                {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text(String(year - 1) + " Summary")
+                    }
+                }
+                .frame(alignment: .leading)
             }
         }
-        .frame(alignment: .leading)
     }
     
     private func getTrailingButton() -> some View {
-        Button(action:  {
-            year = year + 1
-        })
-        {
-            HStack {
-                Text(String(year + 1) + " Summary")
-                Image(systemName: "chevron.right")
+        Group {
+            Button(action:  {
+                year = year + 1
+            })
+            {
+                HStack {
+                    Text(String(year + 1) + " Summary")
+                    Image(systemName: "chevron.right")
+                }
             }
+            .frame(alignment: .leading)
         }
-        .frame(alignment: .leading)
     }
 }
 
